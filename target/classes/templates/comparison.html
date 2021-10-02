@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CSV Comparator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
+
+<section class="my-5">
+    <div class="container">
+        <h1 class="mb-3">Comparison result</h1>
+        <div class="row">
+            <div class="col-5">
+                <div class="card">
+                    <h5 class="card-header">File 1</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">Total records:</div>
+                            <div class="col-4" th:text="${comparisons.get(0).getTotalRecords}"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">Matching records:</div>
+                            <div class="col-4" th:text="${comparisons.get(0).getMatchingRecords()}"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">Unmatched records:</div>
+                            <div class="col-4" th:text="${comparisons.get(0).getUnmatchedRecords()}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-5">
+                <div class="card">
+                    <h5 class="card-header">File 2</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">Total records:</div>
+                            <div class="col-4" th:text="${comparisons.get(1).getTotalRecords}"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">Matching records:</div>
+                            <div class="col-4" th:text="${comparisons.get(1).getMatchingRecords()}"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">Unmatched records:</div>
+                            <div class="col-4" th:text="${comparisons.get(1).getUnmatchedRecords()}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 </body>
 </html>
