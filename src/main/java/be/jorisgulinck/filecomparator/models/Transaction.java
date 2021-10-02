@@ -3,12 +3,11 @@ package be.jorisgulinck.filecomparator.models;
 import lombok.Data;
 
 import javax.persistence.Id;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Data
 public class Transaction {
+
     @Id
     private long transactionId;
     private String profileName;
@@ -32,4 +31,5 @@ public class Transaction {
     public int hashCode() {
         return Objects.hash(transactionDate, transactionAmount, walletReference);
     }
+
 }

@@ -7,8 +7,6 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,7 +15,7 @@ import java.util.List;
 @Component
 public class CsvMapper {
 
-    public List<Transaction> mapToTransactionList(InputStream inputStream) {
+    public List<Transaction> mapToTransactionList(InputStream inputStream) throws Exception{
         String dateTimeFormatterString = "[M/dd/yyyy H:mm][yyyy-MM-dd HH:mm:ss]";
 
         List<Transaction> transactions = new ArrayList<>();
@@ -43,6 +41,7 @@ public class CsvMapper {
 
             transactions.add(transaction);
         });
+
         return transactions;
     }
 }

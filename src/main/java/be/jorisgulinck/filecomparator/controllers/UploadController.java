@@ -2,6 +2,7 @@ package be.jorisgulinck.filecomparator.controllers;
 
 import be.jorisgulinck.filecomparator.dto.ComparisonResultDto;
 import be.jorisgulinck.filecomparator.dto.DtoMapper;
+import be.jorisgulinck.filecomparator.dto.UnmatchedTransactionsDto;
 import be.jorisgulinck.filecomparator.mappers.CsvMapper;
 import be.jorisgulinck.filecomparator.models.Transaction;
 import be.jorisgulinck.filecomparator.services.ComparisonService;
@@ -41,9 +42,13 @@ public class UploadController {
         List<Transaction> filteredListOfList2 = comparisonService.compareStrict(transactionsOfList2, transactionsOfList1);
         comparisonResultDtos.add(dtoMapper.createComparisonResult(transactionsOfList2, filteredListOfList2));
 
-        final ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("comparison");
-        modelAndView.getModel().put("comparisons", comparisonResultDtos);
+        List<UnmatchedTransactionsDto> unmatchedTransactionsDtosOfList1 = dtoMapper.createListUnmatchedTransactionResult(filteredListOfList1);
+        List<UnmatchedTransactionsDto> unmatchedTransactionsDtosOfList2 = dtoMapper.createListUnmatchedTransactionResult(filteredListOfList2);
+
+        ModelAndView modelAndView = new ModelAndView("comparison");
+        modelAndView.addObject("comparisons", comparisonResultDtos);
+        modelAndView.addObject("unmatchedTransactionsOfList1", unmatchedTransactionsDtosOfList1);
+        modelAndView.addObject("unmatchedTransactionsOfList2", unmatchedTransactionsDtosOfList2);
         return modelAndView;
     }
 }

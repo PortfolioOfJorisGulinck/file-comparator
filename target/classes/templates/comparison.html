@@ -51,6 +51,50 @@
             </div>
         </div>
     </div>
+    <div class="container mt-5">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="table-active" scope="col" colspan="4">File 1</th>
+            </tr>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Reference</th>
+                <th scope="col">Amount</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="filteredTransaction : ${unmatchedTransactionsOfList1}">
+                <td th:text="${filteredTransaction.getDate()}"></td>
+                <td th:text="${filteredTransaction.getReference()}"></td>
+                <td th:text="${filteredTransaction.getAmount()}"></td>
+                <td><a href="#">Fuzzy Search</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="table-active" scope="col" colspan="4">File 2</th>
+            </tr>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Reference</th>
+                <th scope="col">Amount</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="filteredTransaction : ${unmatchedTransactionsOfList2}">
+                <td th:text="${filteredTransaction.getDate()}"></td>
+                <td th:text="${filteredTransaction.getReference()}"></td>
+                <td th:text="${filteredTransaction.getAmount()}"></td>
+                <td><a href="#">Fuzzy Search</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
 
 </body>
