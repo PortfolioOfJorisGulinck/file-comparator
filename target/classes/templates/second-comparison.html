@@ -12,21 +12,27 @@
         <table class="table table-bordered">
             <thead>
             <tr class="table-active">
+                <th scope="col">ID</th>
                 <th scope="col">Date</th>
                 <th scope="col">Reference</th>
                 <th scope="col">Amount</th>
+                <th scope="col">Narrative</th>
             </tr>
             <tr>
+                <th th:text="${comparisonTransaction.getTransactionId()}"></th>
                 <th th:text="${comparisonTransaction.getTransactionDate()}"></th>
                 <th th:text="${comparisonTransaction.getWalletReference()}"></th>
                 <th th:text="${comparisonTransaction.getTransactionAmount()}"></th>
+                <th th:text="${comparisonTransaction.getTransactionNarrative()}"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="fuzzyMatchedTransaction : ${fuzzyMatchedList}">
+                <td th:text="${fuzzyMatchedTransaction.getTransactionId()}"></td>
                 <td th:text="${fuzzyMatchedTransaction.getTransactionDate()}"></td>
                 <td th:text="${fuzzyMatchedTransaction.getWalletReference()}"></td>
                 <td th:text="${fuzzyMatchedTransaction.getTransactionAmount()}"></td>
+                <td th:text="${fuzzyMatchedTransaction.getTransactionNarrative()}"></td>
             </tr>
             </tbody>
         </table>

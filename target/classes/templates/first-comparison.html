@@ -28,6 +28,7 @@
                         </div>
                         <div class="row">
                             <div class="col-8">Number of duplicates:</div>
+                            <div class="col-4" th:text="${comparisons.get(0).getNumberOfDuplicates()}"></div>
                         </div>
                     </div>
                 </div>
@@ -51,30 +52,40 @@
                         </div>
                         <div class="row">
                             <div class="col-8">Number of duplicates:</div>
+                            <div class="col-4" th:text="${comparisons.get(1).getNumberOfDuplicates()}"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-3">
+                <button th:onclick="makeVisible()" type="button" class="btn btn-outline-primary mt-3">Unmatched report</button>
+            </div>
+        </div>
     </div>
-    <div class="container mt-5">
+    <div id="unmatched-report-container" class="container mt-5 d-none">
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th class="table-active" scope="col" colspan="4">File 1</th>
+                <th class="table-active" scope="col" colspan="6">File 1</th>
             </tr>
             <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Date</th>
                 <th scope="col">Reference</th>
                 <th scope="col">Amount</th>
+                <th scope="col">Narrative</th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="filteredTransaction : ${unmatchedTransactionsOfList1}">
+                <td th:text="${filteredTransaction.getTransactionId()}"></td>
                 <td th:text="${filteredTransaction.getTransactionDate()}"></td>
                 <td th:text="${filteredTransaction.getWalletReference()}"></td>
                 <td th:text="${filteredTransaction.getTransactionAmount()}"></td>
+                <td th:text="${filteredTransaction.getTransactionNarrative()}"></td>
                 <td>
                     <a th:href="@{/compare(id=${filteredTransaction.getTransactionId()},name=${filteredTransaction.getProfileName()},date=${filteredTransaction.getTransactionDate()},amount=${filteredTransaction.getTransactionAmount()},narrative=${filteredTransaction.getTransactionNarrative()},description=${filteredTransaction.getTransactionDescription()},type=${filteredTransaction.getTransactionType()},reference=${filteredTransaction.getWalletReference()},file=${filteredTransaction.getFileName()})}">Search</a>
                 </td>
@@ -84,20 +95,24 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th class="table-active" scope="col" colspan="4">File 2</th>
+                <th class="table-active" scope="col" colspan="6">File 2</th>
             </tr>
             <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Date</th>
                 <th scope="col">Reference</th>
                 <th scope="col">Amount</th>
+                <th scope="col">Narrative</th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="filteredTransaction : ${unmatchedTransactionsOfList2}">
+                <td th:text="${filteredTransaction.getTransactionId()}"></td>
                 <td th:text="${filteredTransaction.getTransactionDate()}"></td>
                 <td th:text="${filteredTransaction.getWalletReference()}"></td>
                 <td th:text="${filteredTransaction.getTransactionAmount()}"></td>
+                <td th:text="${filteredTransaction.getTransactionNarrative()}"></td>
                 <td>
                     <a th:href="@{/compare(id=${filteredTransaction.getTransactionId()},name=${filteredTransaction.getProfileName()},date=${filteredTransaction.getTransactionDate()},amount=${filteredTransaction.getTransactionAmount()},narrative=${filteredTransaction.getTransactionNarrative()},description=${filteredTransaction.getTransactionDescription()},type=${filteredTransaction.getTransactionType()},reference=${filteredTransaction.getWalletReference()},file=${filteredTransaction.getFileName()})}">Search</a>
                 </td>
@@ -106,6 +121,6 @@
         </table>
     </div>
 </section>
-
 </body>
+<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
 </html>

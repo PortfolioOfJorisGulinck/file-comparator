@@ -10,5 +10,6 @@ public class ComparisonResultDto {
     private int totalRecords;
     private int matchingRecords;
     private int unmatchedRecords;
+    private int numberOfDuplicates;
 
 }

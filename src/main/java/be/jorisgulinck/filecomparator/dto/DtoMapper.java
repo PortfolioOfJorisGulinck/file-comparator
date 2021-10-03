@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Maps a model Transaction object to a dto object
@@ -22,6 +24,12 @@ public class DtoMapper {
         comparisonResultDto.setTotalRecords(originalList.size());
         comparisonResultDto.setMatchingRecords(originalList.size() - comparedResult.size());
         comparisonResultDto.setUnmatchedRecords(comparedResult.size());
+
+        Set<Transaction> uniqueListOfTransactions = new HashSet<>();
+        originalList.forEach(transaction -> uniqueListOfTransactions.add(transaction));
+
+        comparisonResultDto.setNumberOfDuplicates(originalList.size() - uniqueListOfTransactions.size());
+
         return comparisonResultDto;
     }
 
