@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Maps a model Transaction object to a dto object
+ */
 @Component
 public class DtoMapper {
 
@@ -17,19 +20,19 @@ public class DtoMapper {
         return comparisonResultDto;
     }
 
-    private UnmatchedTransactionsDto createUnmatchedTransactionResult(Transaction transaction) {
-        UnmatchedTransactionsDto unmatchedTransactionsDto = new UnmatchedTransactionsDto();
+    private TransactionDto createUnmatchedTransactionResult(Transaction transaction) {
+        TransactionDto transactionDto = new TransactionDto();
 
-        unmatchedTransactionsDto.setAmount(transaction.getTransactionAmount());
-        unmatchedTransactionsDto.setDate(transaction.getTransactionDate());
-        unmatchedTransactionsDto.setReference(transaction.getWalletReference());
+        transactionDto.setAmount(transaction.getTransactionAmount());
+        transactionDto.setDate(transaction.getTransactionDate());
+        transactionDto.setReference(transaction.getWalletReference());
 
-        return unmatchedTransactionsDto;
+        return transactionDto;
     }
 
-    public List<UnmatchedTransactionsDto> createListUnmatchedTransactionResult(List<Transaction> transactions) {
-        List<UnmatchedTransactionsDto> unmatchedTransactionsDtos = new ArrayList<>();
-        transactions.forEach(transaction -> unmatchedTransactionsDtos.add(createUnmatchedTransactionResult(transaction)));
-        return unmatchedTransactionsDtos;
+    public List<TransactionDto> createListUnmatchedTransactionResult(List<Transaction> transactions) {
+        List<TransactionDto> transactionDtos = new ArrayList<>();
+        transactions.forEach(transaction -> transactionDtos.add(createUnmatchedTransactionResult(transaction)));
+        return transactionDtos;
     }
 }

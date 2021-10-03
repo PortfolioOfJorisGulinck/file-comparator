@@ -12,15 +12,26 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Maps the incoming csv file to a Transaction model object
+ */
 @Component
 public class CsvMapper {
 
     public List<Transaction> mapToTransactionList(InputStream inputStream) throws Exception{
+
+        /**
+         * This is a string that the DateTimeFormatter uses to parse a string to a LocalDateTime object
+         * The string can be build upon so more formatting styles, coming from the csv file, can be parsed
+         */
         String dateTimeFormatterString = "[M/dd/yyyy H:mm][yyyy-MM-dd HH:mm:ss]";
 
         List<Transaction> transactions = new ArrayList<>();
         CsvParserSettings settings = new CsvParserSettings();
+
+        /** removes the title row of the csv file */
         settings.setHeaderExtractionEnabled(true);
+
         CsvParser parser = new CsvParser(settings);
         List<Record> parseAllRecords = parser.parseAllRecords(inputStream);
         parseAllRecords.forEach(record -> {

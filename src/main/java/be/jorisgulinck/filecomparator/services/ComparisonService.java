@@ -14,6 +14,7 @@ public class ComparisonService {
 
     private final TransactionComparator transactionComparator;
 
+    /** Compares two collections of Transaction for similarity using the TransactionComparator class */
     public List<Transaction> compareStrict(List<Transaction> listOfTransactions1, List<Transaction> listOfTransactions2) {
         return transactionComparator.compareTransactionsStrict(listOfTransactions1, listOfTransactions2);
     }

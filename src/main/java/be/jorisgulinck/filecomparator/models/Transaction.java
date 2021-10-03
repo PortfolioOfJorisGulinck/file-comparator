@@ -1,11 +1,13 @@
 package be.jorisgulinck.filecomparator.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Id;
 import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 public class Transaction {
 
     @Id
@@ -18,6 +20,7 @@ public class Transaction {
     private String transactionType;
     private String walletReference;
 
+    /** compares the equality of a Transaction object with the properties: transactionDate, transactionAmount, walletReference */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -10,7 +10,7 @@
     <div class="container">
         <h1 class="mb-3">Comparison result</h1>
         <div class="row">
-            <div class="col-5">
+            <div class="col-6">
                 <div class="card">
                     <h5 class="card-header">File 1</h5>
                     <div class="card-body">
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="col-5">
+            <div class="col-6">
                 <div class="card">
                     <h5 class="card-header">File 2</h5>
                     <div class="card-body">
@@ -69,7 +69,8 @@
                 <td th:text="${filteredTransaction.getDate()}"></td>
                 <td th:text="${filteredTransaction.getReference()}"></td>
                 <td th:text="${filteredTransaction.getAmount()}"></td>
-                <td><a href="#">Fuzzy Search</a></td>
+                <td><a th:href="@{/compare(date=${filteredTransaction.getDate()},reference=${filteredTransaction.getReference()}
+                ,amount=${filteredTransaction.getAmount()})}">Fuzzy Search</a></td>
             </tr>
             </tbody>
         </table>

@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Compares two collections of the type Transaction for similarity using the equals method of the Transaction class
+ * The properties where transactions are compared with: transactionDate, transactionAmount and walletReference
+ */
 @Component
 public class TransactionComparator {
 
