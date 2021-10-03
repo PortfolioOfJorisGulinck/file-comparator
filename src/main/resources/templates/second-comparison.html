@@ -17,16 +17,16 @@
                 <th scope="col">Amount</th>
             </tr>
             <tr>
-                <th th:text="${comparisonTransaction.getDate}"></th>
-                <th th:text="${comparisonTransaction.getReference}"></th>
-                <th th:text="${comparisonTransaction.getAmount}"></th>
+                <th th:text="${comparisonTransaction.getTransactionDate()}"></th>
+                <th th:text="${comparisonTransaction.getWalletReference()}"></th>
+                <th th:text="${comparisonTransaction.getTransactionAmount()}"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="fuzzyMatchedTransaction : ${fuzzyMatchedList}">
-                <td th:text="${fuzzyMatchedTransaction.getDate()}"></td>
-                <td th:text="${fuzzyMatchedTransaction.getReference()}"></td>
-                <td th:text="${fuzzyMatchedTransaction.getAmount()}"></td>
+                <td th:text="${fuzzyMatchedTransaction.getTransactionDate()}"></td>
+                <td th:text="${fuzzyMatchedTransaction.getWalletReference()}"></td>
+                <td th:text="${fuzzyMatchedTransaction.getTransactionAmount()}"></td>
             </tr>
             </tbody>
         </table>

@@ -8,6 +8,7 @@ import be.jorisgulinck.filecomparator.models.Transaction;
 import be.jorisgulinck.filecomparator.services.ComparisonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,24 +20,27 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
-public class UploadController {
+public class TransactionController {
 
     private final CsvMapper csvMapper;
     private final DtoMapper dtoMapper;
     private final ComparisonService comparisonService;
 
+    private List<Transaction> transactionsOfList1;
+    private List<Transaction> transactionsOfList2;
+
     /**
-     * Controller for uploading the two csv files and returns the first comparison between the two collections of Transaction
+     * Controller for uploading the two csv files and comparison between the two collections of Transaction
      */
     @PostMapping("/upload")
     public ModelAndView uploadData(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2) throws Exception {
         List<ComparisonResultDto> comparisonResultDtos = new ArrayList<>();
 
         InputStream inputStream1 = file1.getInputStream();
-        List<Transaction> transactionsOfList1 = csvMapper.mapToTransactionList(inputStream1);
+        transactionsOfList1 = csvMapper.mapToTransactionList(inputStream1, "file1");
 
         InputStream inputStream2 = file2.getInputStream();
-        List<Transaction> transactionsOfList2 = csvMapper.mapToTransactionList(inputStream2);
+        transactionsOfList2 = csvMapper.mapToTransactionList(inputStream2, "file2");
 
         List<Transaction> filteredListOfList1 = comparisonService.compareStrict(transactionsOfList1, transactionsOfList2);
         comparisonResultDtos.add(dtoMapper.createComparisonResult(transactionsOfList1, filteredListOfList1));
@@ -51,6 +55,36 @@ public class UploadController {
         modelAndView.addObject("comparisons", comparisonResultDtos);
         modelAndView.addObject("unmatchedTransactionsOfList1", transactionDtosOfList1);
         modelAndView.addObject("unmatchedTransactionsOfList2", transactionDtosOfList2);
+        return modelAndView;
+    }
+
+    @GetMapping("/compare")
+    public ModelAndView compareFuzzy(
+            @RequestParam("id") String id,
+            @RequestParam("name") String name,
+            @RequestParam("date") String date,
+            @RequestParam("amount") String amount,
+            @RequestParam("narrative") String narrative,
+            @RequestParam("description") String description,
+            @RequestParam("type") String type,
+            @RequestParam("reference") String reference,
+            @RequestParam("file") String file) throws Exception{
+
+        TransactionDto comparisonTransaction = new TransactionDto(id, name, date, amount, narrative,
+                description, type, reference, file);
+
+        List<Transaction> fuzzyMatchedList;
+        if (file.equals("file1")) {
+            fuzzyMatchedList = comparisonService.compareFuzzy(
+                    dtoMapper.transactionDtoToTransaction(comparisonTransaction), transactionsOfList2);
+        } else {
+            fuzzyMatchedList = comparisonService.compareFuzzy(
+                    dtoMapper.transactionDtoToTransaction(comparisonTransaction), transactionsOfList1);
+        }
+
+        ModelAndView modelAndView = new ModelAndView("second-comparison");
+        modelAndView.addObject("comparisonTransaction", comparisonTransaction);
+        modelAndView.addObject("fuzzyMatchedList", fuzzyMatchedList);
         return modelAndView;
     }
 }

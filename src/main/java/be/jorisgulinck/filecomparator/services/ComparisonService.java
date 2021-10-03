@@ -5,7 +5,6 @@ import be.jorisgulinck.filecomparator.models.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,8 +18,11 @@ public class ComparisonService {
         return transactionComparator.compareTransactionsStrict(listOfTransactions1, listOfTransactions2);
     }
 
+    /**
+     * Compares a collection of Transaction with a Transaction for similarity in a fuzzy way using
+     * the TransactionComparator class
+     */
     public List<Transaction> compareFuzzy(Transaction transaction, List<Transaction> listOfTransactions) {
-        // TODO: implement logic
-        return new ArrayList<>();
+        return transactionComparator.compareTransactionsFuzzy(transaction, listOfTransactions);
     }
 }

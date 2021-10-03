@@ -26,6 +26,9 @@
                             <div class="col-8">Unmatched records:</div>
                             <div class="col-4" th:text="${comparisons.get(0).getUnmatchedRecords()}"></div>
                         </div>
+                        <div class="row">
+                            <div class="col-8">Number of duplicates:</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -45,6 +48,9 @@
                         <div class="row">
                             <div class="col-8">Unmatched records:</div>
                             <div class="col-4" th:text="${comparisons.get(1).getUnmatchedRecords()}"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">Number of duplicates:</div>
                         </div>
                     </div>
                 </div>
@@ -66,11 +72,12 @@
             </thead>
             <tbody>
             <tr th:each="filteredTransaction : ${unmatchedTransactionsOfList1}">
-                <td th:text="${filteredTransaction.getDate()}"></td>
-                <td th:text="${filteredTransaction.getReference()}"></td>
-                <td th:text="${filteredTransaction.getAmount()}"></td>
-                <td><a th:href="@{/compare(date=${filteredTransaction.getDate()},reference=${filteredTransaction.getReference()}
-                ,amount=${filteredTransaction.getAmount()})}">Fuzzy Search</a></td>
+                <td th:text="${filteredTransaction.getTransactionDate()}"></td>
+                <td th:text="${filteredTransaction.getWalletReference()}"></td>
+                <td th:text="${filteredTransaction.getTransactionAmount()}"></td>
+                <td>
+                    <a th:href="@{/compare(id=${filteredTransaction.getTransactionId()},name=${filteredTransaction.getProfileName()},date=${filteredTransaction.getTransactionDate()},amount=${filteredTransaction.getTransactionAmount()},narrative=${filteredTransaction.getTransactionNarrative()},description=${filteredTransaction.getTransactionDescription()},type=${filteredTransaction.getTransactionType()},reference=${filteredTransaction.getWalletReference()},file=${filteredTransaction.getFileName()})}">Search</a>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -88,10 +95,12 @@
             </thead>
             <tbody>
             <tr th:each="filteredTransaction : ${unmatchedTransactionsOfList2}">
-                <td th:text="${filteredTransaction.getDate()}"></td>
-                <td th:text="${filteredTransaction.getReference()}"></td>
-                <td th:text="${filteredTransaction.getAmount()}"></td>
-                <td><a href="#">Fuzzy Search</a></td>
+                <td th:text="${filteredTransaction.getTransactionDate()}"></td>
+                <td th:text="${filteredTransaction.getWalletReference()}"></td>
+                <td th:text="${filteredTransaction.getTransactionAmount()}"></td>
+                <td>
+                    <a th:href="@{/compare(id=${filteredTransaction.getTransactionId()},name=${filteredTransaction.getProfileName()},date=${filteredTransaction.getTransactionDate()},amount=${filteredTransaction.getTransactionAmount()},narrative=${filteredTransaction.getTransactionNarrative()},description=${filteredTransaction.getTransactionDescription()},type=${filteredTransaction.getTransactionType()},reference=${filteredTransaction.getWalletReference()},file=${filteredTransaction.getFileName()})}">Search</a>
+                </td>
             </tr>
             </tbody>
         </table>

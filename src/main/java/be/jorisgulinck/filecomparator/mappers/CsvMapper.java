@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class CsvMapper {
 
-    public List<Transaction> mapToTransactionList(InputStream inputStream) throws Exception{
+    public List<Transaction> mapToTransactionList(InputStream inputStream, String fileName) throws Exception{
 
         /**
          * This is a string that the DateTimeFormatter uses to parse a string to a LocalDateTime object
@@ -40,15 +40,22 @@ public class CsvMapper {
 
             LocalDateTime transactionDateTime = LocalDateTime.parse(record.getString("TransactionDate"),
                           DateTimeFormatter.ofPattern(dateTimeFormatterString));
-            transaction.setTransactionDate(transactionDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+            transaction.setTransactionDate(transactionDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             transaction.setTransactionAmount(record.getString("TransactionAmount"));
             transaction.setTransactionNarrative(record.getString("TransactionNarrative"));
             transaction.setTransactionDescription(record.getString("TransactionDescription"));
 
-            transaction.setTransactionId(Double.valueOf(record.getString("TransactionID")).longValue());
+            /**
+             * The code below was made because one of the csv files i received had the E notation
+             * It transforms the string to a long object, but loses a lot of precision
+             */
+            // transaction.setTransactionId(Double.valueOf(record.getString("TransactionID")).longValue());
+
+            transaction.setTransactionId(record.getString("TransactionID"));
             transaction.setTransactionType(record.getString("TransactionType"));
             transaction.setWalletReference(record.getString("WalletReference"));
+            transaction.setFileName(fileName);
 
             transactions.add(transaction);
         });

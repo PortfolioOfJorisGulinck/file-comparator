@@ -11,8 +11,14 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TransactionDto {
 
-    private String date;
-    private String reference;
-    private String amount;
+    private String transactionId;
+    private String profileName;
+    private String transactionDate;
+    private String transactionAmount;
+    private String transactionNarrative;
+    private String transactionDescription;
+    private String transactionType;
+    private String walletReference;
+    private String fileName;
 
 }
