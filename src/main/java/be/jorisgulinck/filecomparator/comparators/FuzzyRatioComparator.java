@@ -2,29 +2,22 @@ package be.jorisgulinck.filecomparator.comparators;
 
 import be.jorisgulinck.filecomparator.models.Transaction;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Compares a collection of Transaction with a given Transaction for similarity using the
+ * Fuzzy string matching for java based on the FuzzyWuzzy Python algorithm.
+ * The algorithm uses Levenshtein distance to calculate similarity between strings.
+ * Uses the ratio method
+ */
 @Component
-public class TransactionComparator {
+public class FuzzyRatioComparator implements FuzzyComparator {
 
-    /**
-     * Compares two collections of the type Transaction for similarity using the equals method of the Transaction class
-     */
-    public List<Transaction> compareTransactionsStrict(List<Transaction> list1, List<Transaction> list2) {
-
-        return new ArrayList<>((CollectionUtils.removeAll(list1, list2)));
-    }
-
-    /**
-     * Compares a collection of Transaction with a given Transaction for similarity using the
-     * Fuzzy string matching for java based on the FuzzyWuzzy Python algorithm.
-     * The algorithm uses Levenshtein distance to calculate similarity between strings.
-     */
-    public List<Transaction> compareTransactionsFuzzy(Transaction transaction, List<Transaction> transactionsToCompare) {
+    @Override
+    public List<Transaction> compareTransactionsFuzzy(Transaction transaction, List<Transaction> transactionsToCompare, int ratio) {
         List<Transaction> filteredList = new ArrayList<>();
 
         for (Transaction transactionToCompare : transactionsToCompare) {
@@ -40,7 +33,7 @@ public class TransactionComparator {
             int totalRatio = (idRatio + nameRatio + dateRatio + amountRatio + narrativeRatio + descriptionRatio +
                     typeRatio + referenceRatio) / 8;
 
-            if (totalRatio > 80) {
+            if (totalRatio > ratio) {
                 filteredList.add(transactionToCompare);
             }
         }

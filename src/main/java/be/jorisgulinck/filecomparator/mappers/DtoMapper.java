@@ -1,9 +1,9 @@
-package be.jorisgulinck.filecomparator.dto;
+package be.jorisgulinck.filecomparator.mappers;
 
+import be.jorisgulinck.filecomparator.dto.ComparisonResultDto;
+import be.jorisgulinck.filecomparator.dto.TransactionDto;
 import be.jorisgulinck.filecomparator.models.Transaction;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -25,8 +25,7 @@ public class DtoMapper {
         comparisonResultDto.setMatchingRecords(originalList.size() - comparedResult.size());
         comparisonResultDto.setUnmatchedRecords(comparedResult.size());
 
-        Set<Transaction> uniqueListOfTransactions = new HashSet<>();
-        originalList.forEach(transaction -> uniqueListOfTransactions.add(transaction));
+        Set<Transaction> uniqueListOfTransactions = new HashSet<>(originalList);
 
         comparisonResultDto.setNumberOfDuplicates(originalList.size() - uniqueListOfTransactions.size());
 

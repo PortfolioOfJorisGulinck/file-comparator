@@ -1,12 +1,16 @@
 package be.jorisgulinck.filecomparator.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Transaction {
 
     private String transactionId;
@@ -18,6 +22,10 @@ public class Transaction {
     private String transactionType;
     private String walletReference;
     private String fileName;
+
+    public Transaction(String transactionId) {
+        this.transactionId = transactionId;
+    }
 
     /**
      * compares the equality of a Transaction object with the properties:

@@ -18,7 +18,7 @@
                             <span class="input-group-text">Upload</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="file1" id="inputGroupFile01">
+                            <input type="file" class="custom-file-input" name="file1" id="inputGroupFile01" required>
                             <label class="custom-file-label" for="inputGroupFile01">Choose file 1</label>
                         </div>
                     </div>
@@ -28,14 +28,22 @@
                             <span class="input-group-text">Upload</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="file2" id="inputGroupFile02">
+                            <input type="file" class="custom-file-input" name="file2" id="inputGroupFile02" required>
                             <label class="custom-file-label" for="inputGroupFile02">Choose file 2</label>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Compare</button>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
+        <div class="row mt-5" th:if="${isError}">
+            <div class="col-md-8 mx-auto">
+                <h3>Please verify the csv files:</h3>
+                <ul th:each="message : ${errorMessages}">
+                    <li th:text="${message}"></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </section>
 
