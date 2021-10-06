@@ -1,6 +1,6 @@
 package be.jorisgulinck.filecomparator.services;
 
-import be.jorisgulinck.filecomparator.comparators.FuzzyRatioComparator;
+import be.jorisgulinck.filecomparator.comparators.FuzzySimpleRatioComparator;
 import be.jorisgulinck.filecomparator.comparators.StrictComparator;
 import be.jorisgulinck.filecomparator.models.Transaction;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ class ComparisonServiceTest {
     // TODO fix the bug in ComparisonServiceTest
 
     @Mock
-    private FuzzyRatioComparator fuzzyRatioComparator;
+    private FuzzySimpleRatioComparator fuzzySimpleRatioComparator;
 
     @Mock
     private StrictComparator strictComparator;
@@ -53,7 +53,7 @@ class ComparisonServiceTest {
     @Test
     void compareFuzzy() {
         Transaction transaction = new Transaction("ID2");
-        when(fuzzyRatioComparator.compareTransactionsFuzzy(transaction, listOfTransactions2, 80)).thenReturn(filteredList);
+        when(fuzzySimpleRatioComparator.compareTransactionsFuzzy(transaction, listOfTransactions2, 80)).thenReturn(filteredList);
         List<Transaction> comparedList = comparisonService.compareStrict(listOfTransactions1, listOfTransactions2);
 
         assertEquals(comparedList.get(0).getTransactionId(), filteredList.get(0).getTransactionId());

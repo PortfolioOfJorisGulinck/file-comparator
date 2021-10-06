@@ -22,6 +22,7 @@ public class Transaction {
     private String transactionType;
     private String walletReference;
     private String fileName;
+    private String ratio;
 
     public Transaction(String transactionId) {
         this.transactionId = transactionId;

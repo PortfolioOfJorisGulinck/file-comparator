@@ -87,7 +87,7 @@
                 <td th:text="${filteredTransaction.getTransactionAmount()}"></td>
                 <td th:text="${filteredTransaction.getTransactionNarrative()}"></td>
                 <td>
-                    <a th:href="@{/compare(id=${filteredTransaction.getTransactionId()},name=${filteredTransaction.getProfileName()},date=${filteredTransaction.getTransactionDate()},amount=${filteredTransaction.getTransactionAmount()},narrative=${filteredTransaction.getTransactionNarrative()},description=${filteredTransaction.getTransactionDescription()},type=${filteredTransaction.getTransactionType()},reference=${filteredTransaction.getWalletReference()},file=${filteredTransaction.getFileName()},precisionRatio=${'80'},matchingRoutine=${'Ratio'})}">Search</a>
+                    <a th:href="@{/compare(id=${filteredTransaction.getTransactionId()},name=${filteredTransaction.getProfileName()},date=${filteredTransaction.getTransactionDate()},amount=${filteredTransaction.getTransactionAmount()},narrative=${filteredTransaction.getTransactionNarrative()},description=${filteredTransaction.getTransactionDescription()},type=${filteredTransaction.getTransactionType()},reference=${filteredTransaction.getWalletReference()},file=${filteredTransaction.getFileName()},precisionRatio=${'80'},matchingRoutine=${'Simple Ratio'})}">Search</a>
                 </td>
             </tr>
             </tbody>
@@ -114,7 +114,7 @@
                 <td th:text="${filteredTransaction.getTransactionAmount()}"></td>
                 <td th:text="${filteredTransaction.getTransactionNarrative()}"></td>
                 <td>
-                    <a th:href="@{/compare(id=${filteredTransaction.getTransactionId()},name=${filteredTransaction.getProfileName()},date=${filteredTransaction.getTransactionDate()},amount=${filteredTransaction.getTransactionAmount()},narrative=${filteredTransaction.getTransactionNarrative()},description=${filteredTransaction.getTransactionDescription()},type=${filteredTransaction.getTransactionType()},reference=${filteredTransaction.getWalletReference()},file=${filteredTransaction.getFileName()})}">Search</a>
+                    <a th:href="@{/compare(id=${filteredTransaction.getTransactionId()},name=${filteredTransaction.getProfileName()},date=${filteredTransaction.getTransactionDate()},amount=${filteredTransaction.getTransactionAmount()},narrative=${filteredTransaction.getTransactionNarrative()},description=${filteredTransaction.getTransactionDescription()},type=${filteredTransaction.getTransactionType()},reference=${filteredTransaction.getWalletReference()},file=${filteredTransaction.getFileName()},precisionRatio=${'80'},matchingRoutine=${'Simple Ratio'})}">Search</a>
                 </td>
             </tr>
             </tbody>

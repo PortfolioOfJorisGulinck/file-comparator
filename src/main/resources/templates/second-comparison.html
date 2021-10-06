@@ -35,7 +35,7 @@
                             <option>Token Sort Ratio</option>
                             <option>Token Sort Partial Ratio</option>
                             <option>Token Set Ratio</option>
-                            <option>Token Set Partial Ratio</option>Weighted Ratio
+                            <option>Token Set Partial Ratio</option>
                             <option>Weighted Ratio</option>
                         </select>
                     </div>
@@ -58,6 +58,7 @@
             <table class="table table-bordered">
                 <thead>
                 <tr class="table-active">
+                    <th scope="col">Ratio</th>
                     <th scope="col">ID</th>
                     <th scope="col">Date</th>
                     <th scope="col">Reference</th>
@@ -65,6 +66,7 @@
                     <th scope="col">Narrative</th>
                 </tr>
                 <tr>
+                    <th></th>
                     <th th:text="${comparisonTransaction.getTransactionId()}"></th>
                     <th th:text="${comparisonTransaction.getTransactionDate()}"></th>
                     <th th:text="${comparisonTransaction.getWalletReference()}"></th>
@@ -74,6 +76,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="fuzzyMatchedTransaction : ${fuzzyMatchedList}">
+                    <td th:text="${fuzzyMatchedTransaction.getRatio()}"></td>
                     <td th:text="${fuzzyMatchedTransaction.getTransactionId()}"></td>
                     <td th:text="${fuzzyMatchedTransaction.getTransactionDate()}"></td>
                     <td th:text="${fuzzyMatchedTransaction.getWalletReference()}"></td>

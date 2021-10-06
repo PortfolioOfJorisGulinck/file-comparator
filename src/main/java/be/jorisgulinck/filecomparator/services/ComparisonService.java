@@ -1,6 +1,7 @@
 package be.jorisgulinck.filecomparator.services;
 
-import be.jorisgulinck.filecomparator.comparators.FuzzyRatioComparator;
+import be.jorisgulinck.filecomparator.comparators.FuzzyComparator;
+import be.jorisgulinck.filecomparator.comparators.FuzzyComparatorFactory;
 import be.jorisgulinck.filecomparator.comparators.StrictComparator;
 import be.jorisgulinck.filecomparator.models.Transaction;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,6 @@ import java.util.List;
 public class ComparisonService {
 
     private final StrictComparator strictComparator;
-    private final FuzzyRatioComparator fuzzyComparator;
 
     /** Compares two collections of Transaction for similarity using the TransactionComparator class */
     public List<Transaction> compareStrict(List<Transaction> listOfTransactions1, List<Transaction> listOfTransactions2) {
@@ -24,7 +24,9 @@ public class ComparisonService {
      * Compares a collection of Transaction with a Transaction for similarity in a fuzzy way using
      * the TransactionComparator class
      */
-    public List<Transaction> compareFuzzy(Transaction transaction, List<Transaction> listOfTransactions, int ratio) {
+    public List<Transaction> compareFuzzy(Transaction transaction, List<Transaction> listOfTransactions, String matchingRoutine, int ratio) {
+        FuzzyComparatorFactory fuzzyComparatorFactory = new FuzzyComparatorFactory();
+        FuzzyComparator fuzzyComparator = fuzzyComparatorFactory.getFuzzyComparator(matchingRoutine);
         return fuzzyComparator.compareTransactionsFuzzy(transaction, listOfTransactions, ratio);
     }
 }

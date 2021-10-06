@@ -14,7 +14,7 @@ import java.util.List;
  * Uses the ratio method
  */
 @Component
-public class FuzzyRatioComparator implements FuzzyComparator {
+public class FuzzySimpleRatioComparator implements FuzzyComparator {
 
     @Override
     public List<Transaction> compareTransactionsFuzzy(Transaction transaction, List<Transaction> transactionsToCompare, int ratio) {
@@ -32,6 +32,8 @@ public class FuzzyRatioComparator implements FuzzyComparator {
 
             int totalRatio = (idRatio + nameRatio + dateRatio + amountRatio + narrativeRatio + descriptionRatio +
                     typeRatio + referenceRatio) / 8;
+
+            transactionToCompare.setRatio(String.valueOf(totalRatio));
 
             if (totalRatio > ratio) {
                 filteredList.add(transactionToCompare);

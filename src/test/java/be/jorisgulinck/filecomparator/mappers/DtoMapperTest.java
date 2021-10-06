@@ -45,7 +45,7 @@ class DtoMapperTest {
         TransactionDto transactionDto = new TransactionDto("transactionId", "profileName",
                 "transactionDate", "transactionAmount", "transactionNarrative",
                 "transactionDescription", "transactionType", "walletReference",
-                "fileName");
+                "fileName", null);
 
         Transaction transaction = mapper.transactionDtoToTransaction(transactionDto);
         assertEquals(transactionDto.getTransactionId(), transaction.getTransactionId());

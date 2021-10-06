@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Comparator;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,5 +22,7 @@ public class TransactionDto {
     private String transactionType;
     private String walletReference;
     private String fileName;
+    private String ratio;
+
 
 }
