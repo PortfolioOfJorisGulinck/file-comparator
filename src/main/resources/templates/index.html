@@ -38,10 +38,12 @@
         </div>
         <div class="row mt-5" th:if="${isError}">
             <div class="col-md-8 mx-auto">
-                <h3>Please verify the csv files:</h3>
-                <ul th:each="message : ${errorMessages}">
-                    <li th:text="${message}"></li>
-                </ul>
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <h4 class="mb-2">Please verify the csv files:</h4>
+                    <ul th:each="message : ${errorMessages}">
+                        <li th:text="${message}"></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

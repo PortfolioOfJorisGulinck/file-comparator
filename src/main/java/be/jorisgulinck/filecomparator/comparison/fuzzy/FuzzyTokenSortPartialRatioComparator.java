@@ -1,4 +1,4 @@
-package be.jorisgulinck.filecomparator.comparators;
+package be.jorisgulinck.filecomparator.comparison.fuzzy;
 
 import be.jorisgulinck.filecomparator.models.Transaction;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
@@ -6,7 +6,24 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Compares a collection of Transaction with a given Transaction for similarity using the FuzzyWuzzy Python algorithm.
+ * The Token Sort Ratio function compares two strings by measuring the difference between two sequences. For this it uses
+ * the Levenshtein distance algorithm.
+ *
+ * The problem with the Simple Ratio & Partial Ratio function is that not only inconsistent substrings give an unjustified
+ * low score, but we also have to deal with differences in string construction.
+ * To get around it, you can use the Token Sort Ratio algorithm. The token sort approach involves tokenizing the string in question,
+ * sorting the tokens alphabetically, and then joining them back into a string. Then it compares the transformed strings with
+ * a Partial Ratio.
+ *
+ * More information: https://www.youtube.com/watch?v=4L0Py4GkmPU
+ */
 public class FuzzyTokenSortPartialRatioComparator implements FuzzyComparator{
+
+    protected FuzzyTokenSortPartialRatioComparator() {
+    }
+
     @Override
     public List<Transaction> compareTransactionsFuzzy(Transaction transaction, List<Transaction> transactionsToCompare, int ratio) {
         List<Transaction> filteredList = new ArrayList<>();

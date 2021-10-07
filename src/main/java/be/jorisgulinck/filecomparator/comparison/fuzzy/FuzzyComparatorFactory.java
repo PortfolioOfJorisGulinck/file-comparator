@@ -1,8 +1,11 @@
-package be.jorisgulinck.filecomparator.comparators;
+package be.jorisgulinck.filecomparator.comparison.fuzzy;
 
+/**
+ * A factory class for the creation of an implementation of the FuzzyComparator interface.
+ */
 public class FuzzyComparatorFactory {
 
-    public FuzzyComparator getFuzzyComparator(String matchingRoutine) {
+    public FuzzyComparator createFuzzyComparator(String matchingRoutine) {
         if (matchingRoutine == null) {
             return null;
         }
@@ -18,8 +21,6 @@ public class FuzzyComparatorFactory {
         } else if (matchingRoutine.equalsIgnoreCase("Token Set Ratio")) {
             return new FuzzyTokenSetRatioComparator();
         } else if (matchingRoutine.equalsIgnoreCase("Token Set Partial Ratio")) {
-            return new FuzzyTokenSetPartialRatioComparator();
-        } else if (matchingRoutine.equalsIgnoreCase("Weighted Ratio")) {
             return new FuzzyTokenSetPartialRatioComparator();
         }
 

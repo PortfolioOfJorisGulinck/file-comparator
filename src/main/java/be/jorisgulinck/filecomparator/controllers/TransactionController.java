@@ -1,6 +1,7 @@
 package be.jorisgulinck.filecomparator.controllers;
 
 import be.jorisgulinck.filecomparator.dto.ComparisonResultDto;
+import be.jorisgulinck.filecomparator.services.ValidationService;
 import be.jorisgulinck.filecomparator.utilities.SortByRatio;
 import be.jorisgulinck.filecomparator.mappers.DtoMapper;
 import be.jorisgulinck.filecomparator.dto.TransactionDto;
@@ -8,6 +9,9 @@ import be.jorisgulinck.filecomparator.mappers.CsvMapper;
 import be.jorisgulinck.filecomparator.models.Transaction;
 import be.jorisgulinck.filecomparator.services.ComparisonService;
 import be.jorisgulinck.filecomparator.validation.CsvValidationResult;
+import be.jorisgulinck.filecomparator.validation.FuzzyParamsValidationResult;
+import be.jorisgulinck.filecomparator.validation.FuzzyParamsValidator;
+import be.jorisgulinck.filecomparator.validation.ValidationResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +31,14 @@ public class TransactionController {
     private final CsvMapper csvMapper;
     private final DtoMapper dtoMapper;
     private final ComparisonService comparisonService;
+    private final ValidationService validationService;
+
+    // TODO fix validation of csv
+    // TODO finnish testing
+
+    // TODO refactor where possible
+    // TODO make proper documentation
+    // TODO deploy on heroku
 
     /**
      * Controller for uploading the two csv files and comparison between the two collections of Transaction
@@ -35,11 +47,8 @@ public class TransactionController {
     public ModelAndView uploadData(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2, HttpSession session) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
 
-        InputStream inputStream1 = file1.getInputStream();
-        InputStream inputStream2 = file2.getInputStream();
-
-        CsvValidationResult mapAndValidateResultOfFile1 = csvMapper.mapAndValidate(inputStream1, "file1");
-        CsvValidationResult mapAndValidateResultOfFile2 = csvMapper.mapAndValidate(inputStream2, "file2");
+        ValidationResult mapAndValidateResultOfFile1 = csvMapper.mapAndValidate(file1.getInputStream(), "file1");
+        ValidationResult mapAndValidateResultOfFile2 = csvMapper.mapAndValidate(file2.getInputStream(), "file2");
 
         if (!mapAndValidateResultOfFile1.isValidationError() && !mapAndValidateResultOfFile2.isValidationError()) {
 
@@ -63,8 +72,8 @@ public class TransactionController {
             session.setAttribute("filteredListOfFile1", filteredListOfFile1);
             session.setAttribute("filteredListOfFile2", filteredListOfFile2);
 
-            List<TransactionDto> transactionDtosOfList1 = dtoMapper.createListUnmatchedTransactionResult(filteredListOfFile1);
-            List<TransactionDto> transactionDtosOfList2 = dtoMapper.createListUnmatchedTransactionResult(filteredListOfFile2);
+            Set<TransactionDto> transactionDtosOfList1 = dtoMapper.createListOfUniqueTransactionDtos(filteredListOfFile1);
+            Set<TransactionDto> transactionDtosOfList2 = dtoMapper.createListOfUniqueTransactionDtos(filteredListOfFile2);
 
             modelAndView.setViewName("first-comparison");
             modelAndView.addObject("comparisons", comparisonResultDtos);
@@ -98,33 +107,41 @@ public class TransactionController {
             @RequestParam("precisionRatio") String ratio,
             @RequestParam("matchingRoutine") String matchingRoutine,
             HttpSession session) {
-
+        ModelAndView modelAndView = new ModelAndView();
         List<Transaction> file1list = (List<Transaction>) session.getAttribute("filteredListOfFile1");
         List<Transaction> file2list = (List<Transaction>) session.getAttribute("filteredListOfFile2");
-
-        // functie validating ratio
-        // -> als niet juist is standaard 80 geven
 
         TransactionDto comparisonTransaction = new TransactionDto(id, name, date, amount, narrative,
                 description, type, reference, file, null);
 
-        List<Transaction> fuzzyMatchedList;
-        if (file.equals("file1")) {
-            fuzzyMatchedList = comparisonService.compareFuzzy(
-                    dtoMapper.transactionDtoToTransaction(comparisonTransaction), file2list, matchingRoutine, Integer.parseInt(ratio));
+        ValidationResult validationResult = validationService.validateFuzzyParams(matchingRoutine, ratio);
+        if (!validationResult.isValidationError()){
+            List<Transaction> fuzzyMatchedList;
+            if (file.equals("file1")) {
+                fuzzyMatchedList = comparisonService.compareFuzzy(
+                        dtoMapper.transactionDtoToTransaction(comparisonTransaction), file2list, matchingRoutine, Integer.parseInt(ratio));
+            } else {
+                fuzzyMatchedList = comparisonService.compareFuzzy(
+                        dtoMapper.transactionDtoToTransaction(comparisonTransaction), file1list, matchingRoutine, Integer.parseInt(ratio));
+            }
+
+            List<TransactionDto> fuzzyMatchedDtoList = dtoMapper.createListOfTransactionDtos(fuzzyMatchedList);
+
+            Comparator c = Collections.reverseOrder(new SortByRatio());
+            Collections.sort(fuzzyMatchedDtoList, c);
+
+            modelAndView.setViewName("second-comparison");
+            modelAndView.addObject("comparisonTransaction", comparisonTransaction);
+            modelAndView.addObject("fuzzyMatchedList", fuzzyMatchedDtoList);
+            modelAndView.addObject("isError", false);
         } else {
-            fuzzyMatchedList = comparisonService.compareFuzzy(
-                    dtoMapper.transactionDtoToTransaction(comparisonTransaction), file1list, matchingRoutine, Integer.parseInt(ratio));
+            modelAndView.setViewName("second-comparison");
+            modelAndView.addObject("errorMessages", validationResult.getErrorMessages());
+            modelAndView.addObject("isError", validationResult.isValidationError());
+            modelAndView.addObject("comparisonTransaction", comparisonTransaction);
+            modelAndView.addObject("fuzzyMatchedList", null);
         }
 
-        List<TransactionDto> fuzzyMatchedDtoList = dtoMapper.createListUnmatchedTransactionResult(fuzzyMatchedList);
-
-        Comparator c = Collections.reverseOrder(new SortByRatio());
-        Collections.sort(fuzzyMatchedDtoList, c);
-
-        ModelAndView modelAndView = new ModelAndView("second-comparison");
-        modelAndView.addObject("comparisonTransaction", comparisonTransaction);
-        modelAndView.addObject("fuzzyMatchedList", fuzzyMatchedDtoList);
         return modelAndView;
     }
 }

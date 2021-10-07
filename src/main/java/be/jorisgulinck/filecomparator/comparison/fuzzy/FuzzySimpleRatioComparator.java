@@ -1,4 +1,4 @@
-package be.jorisgulinck.filecomparator.comparators;
+package be.jorisgulinck.filecomparator.comparison.fuzzy;
 
 import be.jorisgulinck.filecomparator.models.Transaction;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
@@ -8,13 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Compares a collection of Transaction with a given Transaction for similarity using the
- * Fuzzy string matching for java based on the FuzzyWuzzy Python algorithm.
- * The algorithm uses Levenshtein distance to calculate similarity between strings.
- * Uses the ratio method
+ * Compares a collection of Transaction with a given Transaction for similarity using the FuzzyWuzzy Python algorithm.
+ * The Simple Ratio function compares two strings by measuring the difference between two sequences. For this it uses
+ * the Levenshtein distance algorithm.
+ *
+ * More information: https://www.youtube.com/watch?v=4L0Py4GkmPU
  */
 @Component
 public class FuzzySimpleRatioComparator implements FuzzyComparator {
+
+    protected FuzzySimpleRatioComparator() {
+    }
 
     @Override
     public List<Transaction> compareTransactionsFuzzy(Transaction transaction, List<Transaction> transactionsToCompare, int ratio) {

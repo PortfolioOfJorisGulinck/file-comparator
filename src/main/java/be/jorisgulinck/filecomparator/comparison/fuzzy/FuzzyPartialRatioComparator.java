@@ -1,4 +1,4 @@
-package be.jorisgulinck.filecomparator.comparators;
+package be.jorisgulinck.filecomparator.comparison.fuzzy;
 
 import be.jorisgulinck.filecomparator.models.Transaction;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
@@ -6,7 +6,22 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Compares a collection of Transaction with a given Transaction for similarity using the FuzzyWuzzy Python algorithm.
+ * The Partial Ratio function compares two strings by measuring the difference between two sequences. For this it uses
+ * the Levenshtein distance algorithm.
+ *
+ * The problem with the Simple Ratio function is that inconsistent substrings sometimes give an unjustified low score.
+ * To get around it, you can use the Partial Ratio or “best partial” algorithm, when two strings are of noticeably
+ * different lengths.
+ *
+ * More information: https://www.youtube.com/watch?v=4L0Py4GkmPU
+ */
 public class FuzzyPartialRatioComparator implements FuzzyComparator{
+
+    protected FuzzyPartialRatioComparator() {
+    }
+
     @Override
     public List<Transaction> compareTransactionsFuzzy(Transaction transaction, List<Transaction> transactionsToCompare, int ratio) {
         List<Transaction> filteredList = new ArrayList<>();

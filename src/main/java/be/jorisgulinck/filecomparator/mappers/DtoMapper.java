@@ -32,14 +32,20 @@ public class DtoMapper {
         return comparisonResultDto;
     }
 
-    private TransactionDto createUnmatchedTransactionResult(Transaction transaction) {
+    private TransactionDto transactionToTransactionDto(Transaction transaction) {
         return modelMapper.map(transaction, TransactionDto.class);
     }
 
-    public List<TransactionDto> createListUnmatchedTransactionResult(List<Transaction> transactions) {
-        List<TransactionDto> transactionDtos = new ArrayList<>();
-        transactions.forEach(transaction -> transactionDtos.add(createUnmatchedTransactionResult(transaction)));
-        return transactionDtos;
+    public Set<TransactionDto> createListOfUniqueTransactionDtos(List<Transaction> transactions) {
+        Set<TransactionDto> uniqueTransactionDtos = new HashSet<>();
+        transactions.forEach(transaction -> uniqueTransactionDtos.add(transactionToTransactionDto(transaction)));
+        return uniqueTransactionDtos;
+    }
+
+    public List<TransactionDto> createListOfTransactionDtos(List<Transaction> transactions) {
+        List<TransactionDto> uniqueTransactionDtos = new ArrayList<>();
+        transactions.forEach(transaction -> uniqueTransactionDtos.add(transactionToTransactionDto(transaction)));
+        return uniqueTransactionDtos;
     }
 
     public Transaction transactionDtoToTransaction(TransactionDto transactionDto) {

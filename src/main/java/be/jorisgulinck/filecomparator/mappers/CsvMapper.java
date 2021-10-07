@@ -1,9 +1,11 @@
 package be.jorisgulinck.filecomparator.mappers;
 
 import be.jorisgulinck.filecomparator.models.Transaction;
+import be.jorisgulinck.filecomparator.services.ValidationService;
 import be.jorisgulinck.filecomparator.utilities.ParseUtilities;
 import be.jorisgulinck.filecomparator.validation.CsvValidationResult;
 import be.jorisgulinck.filecomparator.validation.CsvValidator;
+import be.jorisgulinck.filecomparator.validation.ValidationResult;
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
@@ -23,10 +25,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CsvMapper {
 
-    private final CsvValidator validator;
+    private final ValidationService validationService;
     private final ParseUtilities parseUtilities;
 
-    public CsvValidationResult mapAndValidate(InputStream inputStream, String fileName) {
+    public ValidationResult mapAndValidate(InputStream inputStream, String fileName) {
 
         CsvParserSettings settings = new CsvParserSettings();
         settings.setHeaderExtractionEnabled(true); //removes the title row of the csv file
@@ -57,6 +59,8 @@ public class CsvMapper {
         });
 
         /*
+
+        // TODO fix this bug
         List<String> headers = extractHeaders(inputStream);
         if (validator.validateCsvHeaders(headers)) {
             validationResult.addErrorMessage("Please upload a csv file with correct headers: ProfileName, TransactionDate, " +
@@ -65,7 +69,7 @@ public class CsvMapper {
         }
         */
 
-        return validator.validateCsvFile(validationResult);
+        return validationService.validateCsvFile(validationResult);
     }
 
     private List<String> extractHeaders(InputStream inputStream) {

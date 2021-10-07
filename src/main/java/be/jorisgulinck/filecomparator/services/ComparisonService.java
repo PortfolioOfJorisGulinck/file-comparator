@@ -1,22 +1,20 @@
 package be.jorisgulinck.filecomparator.services;
 
-import be.jorisgulinck.filecomparator.comparators.FuzzyComparator;
-import be.jorisgulinck.filecomparator.comparators.FuzzyComparatorFactory;
-import be.jorisgulinck.filecomparator.comparators.StrictComparator;
+import be.jorisgulinck.filecomparator.comparison.fuzzy.FuzzyComparator;
+import be.jorisgulinck.filecomparator.comparison.fuzzy.FuzzyComparatorFactory;
+import be.jorisgulinck.filecomparator.comparison.strict.StrictComparator;
+import be.jorisgulinck.filecomparator.comparison.strict.StrictEqualsComparator;
 import be.jorisgulinck.filecomparator.models.Transaction;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ComparisonService {
-
-    private final StrictComparator strictComparator;
 
     /** Compares two collections of Transaction for similarity using the TransactionComparator class */
     public List<Transaction> compareStrict(List<Transaction> listOfTransactions1, List<Transaction> listOfTransactions2) {
+        StrictComparator strictComparator = new StrictEqualsComparator();
         return strictComparator.compareTransactionsStrict(listOfTransactions1, listOfTransactions2);
     }
 
@@ -26,7 +24,7 @@ public class ComparisonService {
      */
     public List<Transaction> compareFuzzy(Transaction transaction, List<Transaction> listOfTransactions, String matchingRoutine, int ratio) {
         FuzzyComparatorFactory fuzzyComparatorFactory = new FuzzyComparatorFactory();
-        FuzzyComparator fuzzyComparator = fuzzyComparatorFactory.getFuzzyComparator(matchingRoutine);
+        FuzzyComparator fuzzyComparator = fuzzyComparatorFactory.createFuzzyComparator(matchingRoutine);
         return fuzzyComparator.compareTransactionsFuzzy(transaction, listOfTransactions, ratio);
     }
 }

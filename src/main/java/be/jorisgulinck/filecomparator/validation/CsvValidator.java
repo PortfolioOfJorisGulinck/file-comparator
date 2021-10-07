@@ -10,9 +10,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CsvValidator {
 
+    // TODO can i refactor this class?
+
     private final ParseUtilities parseUtilities;
 
     public boolean validateCsvHeaders(List<String> headers) {
+        // TODO fix this bug
         boolean error = false;
 
         for (String header : headers) {
@@ -84,11 +87,13 @@ public class CsvValidator {
     }
 
     private boolean validateTransactionDescription(String description) {
+        // TODO fix this bug
         //return !(description.equals("DEDUCT"));
         return false;
     }
 
     private boolean validateTransactionID(String id) {
+        // TODO fix this bug
         //return (!(parseUtilities.tryParseInt(id) && !(id.length() == 16)));
         return false;
     }
@@ -98,6 +103,7 @@ public class CsvValidator {
     }
 
     private boolean validateWalletReference(String reference) {
+        // TODO fix this bug
         // return !(reference.startsWith("P_N") && !(reference.length() == 34));
         return false;
     }

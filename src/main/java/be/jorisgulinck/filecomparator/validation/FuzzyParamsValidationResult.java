@@ -7,30 +7,26 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CsvValidationResult implements ValidationResult {
-
-    private List<Transaction> validatedListOfTransactions;
+public class FuzzyParamsValidationResult implements ValidationResult {
     private List<String> errorMessages;
     private boolean validationError;
 
-    public CsvValidationResult() {
+    public FuzzyParamsValidationResult() {
         this.errorMessages = new ArrayList<>();
-        this.validatedListOfTransactions = new ArrayList<>();
     }
 
     @Override
     public void addErrorMessage(String message) {
-        this.errorMessages.add(message);
+        errorMessages.add(message);
     }
 
     @Override
     public void addTransaction(Transaction transaction) {
-        validatedListOfTransactions.add(transaction);
     }
 
     @Override
     public List<Transaction> getValidatedListOfTransactions() {
-        return validatedListOfTransactions;
+        return null;
     }
 
     @Override

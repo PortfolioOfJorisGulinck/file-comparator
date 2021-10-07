@@ -9,35 +9,45 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DtoMapperTest {
 
     private DtoMapper mapper;
+    private List<Transaction> originalList;
+    List<Transaction> comparedResult;
 
     @BeforeEach
     void setUp() {
-       mapper = new DtoMapper();
+        mapper = new DtoMapper();
+        originalList = new ArrayList<>(Arrays.asList(new Transaction("ID1"),
+                new Transaction("ID1"), new Transaction("ID2")));
+        comparedResult = new ArrayList<>(Arrays.asList(new Transaction("ID1"),
+                new Transaction("ID3")));
+
     }
 
     @Test
     void createComparisonResult() {
-        List<Transaction> originalList = new ArrayList<>(Arrays.asList(new Transaction("ID1"), new Transaction("ID1"), new Transaction("ID2")));
-        List<Transaction> comparedResult = new ArrayList<>(Arrays.asList(new Transaction("ID1"), new Transaction("ID3")));
-
         ComparisonResultDto comparisonResultDto = mapper.createComparisonResult(originalList, comparedResult);
         assertEquals(comparisonResultDto.getNumberOfDuplicates(), 1);
         assertEquals(comparisonResultDto.getTotalRecords(), 3);
     }
 
     @Test
-    void createListUnmatchedTransactionResult() {
-        List<Transaction> transactions = new ArrayList<>(Arrays.asList(new Transaction("ID1"), new Transaction("ID1"), new Transaction("ID2")));
+    void createListOfUniqueTransactionDtos() {
 
-        List<TransactionDto> transactionDtos = mapper.createListUnmatchedTransactionResult(transactions);
-        assertEquals(transactions.get(0).getTransactionId(), transactionDtos.get(0).getTransactionId());
-        assertEquals(transactions.get(1).getTransactionId(), transactionDtos.get(1).getTransactionId());
+        // TODO implement logic
+
+    }
+
+    @Test
+    void createListOfTransactionDtos() {
+        List<TransactionDto> transactionDtos = mapper.createListOfTransactionDtos(originalList);
+        assertEquals(originalList.get(0).getTransactionId(), transactionDtos.get(0).getTransactionId());
+        assertEquals(originalList.get(1).getTransactionId(), transactionDtos.get(1).getTransactionId());
     }
 
     @Test
@@ -52,6 +62,5 @@ class DtoMapperTest {
         assertEquals(transactionDto.getTransactionDate(), transaction.getTransactionDate());
         assertEquals(transactionDto.getTransactionAmount(), transaction.getTransactionAmount());
     }
+
 }
-
-
