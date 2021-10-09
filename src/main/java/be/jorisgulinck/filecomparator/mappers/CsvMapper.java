@@ -29,8 +29,10 @@ public class CsvMapper {
 
     /**
      * Maps and validates the incoming csv file to an implementation of the {@link ValidationResult} interface.
-     * @param inputStream Stream of bytes that delivers the csv file, which needs to be mapped to a collection of {@link Transaction}.
-     * @param fileName String with the name of the file. The name can be for example <i>file1</i> or <i>file2</i>.
+     *
+     * @param inputStream Stream of bytes that delivers the csv file, which needs to be mapped to a collection of
+     *                    {@link Transaction}.
+     * @param fileName    String with the name of the file. The name can be for example <i>file1</i> or <i>file2</i>.
      * @return {@link CsvValidationResult}
      */
     public CsvValidationResult mapAndValidate(InputStream inputStream, String fileName) {

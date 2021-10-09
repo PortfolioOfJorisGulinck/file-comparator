@@ -59,8 +59,8 @@ public class ComparisonService {
      * @param file            The name of the file of {@link Transaction}.
      * @param listOfFile1     Collection of {@link Transaction} of file1.
      * @param listOfFile2     Collection of {@link Transaction} of file2.
-     * @param matchingRoutine The name of the <i>matching strategy</i> used by {@link FuzzyComparatorFactory} for the creation
-     *                        of the correct implementation of {@link FuzzyComparator}.
+     * @param matchingRoutine The name of the <i>matching strategy</i> used by {@link FuzzyComparatorFactory} for the
+     *                        creation of the correct implementation of {@link FuzzyComparator}.
      * @param ratio           The value that determines the precision of the search algorithm.
      * @return Returns the compared data as a {@link FuzzyComparisonResultDto} object.
      */
@@ -130,6 +130,5 @@ public class ComparisonService {
 
         return uniqueFuzzyComparedList;
     }
-
 
 }

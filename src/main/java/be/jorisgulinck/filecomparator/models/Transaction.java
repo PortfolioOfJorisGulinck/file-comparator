@@ -35,6 +35,7 @@ public class Transaction {
     /**
      * Compares the equality of a Transaction object with the properties: transactionId, profileName,transactionDate,
      * transactionAmount,transactionNarrative, transactionDescription,transactionType,walletReference.
+     *
      * @param o Object that needs to be compared.
      * @return Boolean value of the comparison. Returns true if the object is equal to the other object.
      */
@@ -46,16 +47,17 @@ public class Transaction {
         return Objects.equals(transactionId, that.transactionId) && Objects.equals(profileName,
                 that.profileName) && Objects.equals(transactionDate, that.transactionDate) &&
                 Objects.equals(transactionAmount, that.transactionAmount) && Objects.equals(
-                        transactionNarrative, that.transactionNarrative) && Objects.equals(
-                                transactionDescription, that.transactionDescription) && Objects.equals(
-                                        transactionType, that.transactionType) && Objects.equals(
-                                                walletReference, that.walletReference);
+                transactionNarrative, that.transactionNarrative) && Objects.equals(
+                transactionDescription, that.transactionDescription) && Objects.equals(
+                transactionType, that.transactionType) && Objects.equals(
+                walletReference, that.walletReference);
     }
 
     /**
      * Calculates a numerical value of the object using the properties: transactionId, profileName,transactionDate,
-     * transactionAmount,transactionNarrative, transactionDescription,transactionType,walletReference
-     * @return HashCode
+     * transactionAmount,transactionNarrative, transactionDescription,transactionType,walletReference.
+     *
+     * @return HashCode.
      */
     @Override
     public int hashCode() {

@@ -7,6 +7,7 @@ public class FuzzyComparatorFactory {
 
     /**
      * Factory method for the creation of a {@link FuzzyComparator} implementation.
+     *
      * @param matchingRoutine A string value that defines the which {@link FuzzyComparator} implementation will be created.
      * @return An implementation class of {@link FuzzyComparator}.
      */

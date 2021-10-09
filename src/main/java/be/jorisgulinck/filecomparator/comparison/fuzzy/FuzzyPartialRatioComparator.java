@@ -7,24 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>Compares a collection of {@link Transaction} with a given {@link Transaction} for similarity using the FuzzyWuzzy Python algorithm.
- * The Partial Ratio function compares two strings by measuring the difference between two sequences. For this it uses
- * the Levenshtein distance algorithm.</p>
+ * <p>Compares a collection of {@link Transaction} with a given {@link Transaction} for similarity using the FuzzyWuzzy
+ * Python algorithm. The Partial Ratio function compares two strings by measuring the difference between two sequences.
+ * For this it uses the Levenshtein distance algorithm.</p>
  *
  * <p>The problem with the Simple Ratio function is that inconsistent substrings sometimes give an unjustified low score.
  * To get around it, you can use the Partial Ratio or best partial algorithm, when two strings are of noticeably
  * different lengths.</p>
  */
-public class FuzzyPartialRatioComparator implements FuzzyComparator{
+public class FuzzyPartialRatioComparator implements FuzzyComparator {
 
     protected FuzzyPartialRatioComparator() {
     }
 
     /**
-     * Compares a collection of {@link Transaction} with a given {@link Transaction} object for similarity using the <i>Partial Ratio</i> strategy of FuzzyWuzzy.
-     * @param transaction Transaction object that compares itself with a given collection of {@link Transaction}.
+     * Compares a collection of {@link Transaction} with a given {@link Transaction} object for similarity using the
+     * <i>Partial Ratio</i> strategy of FuzzyWuzzy.
+     *
+     * @param transaction           Transaction object that compares itself with a given collection of {@link Transaction}.
      * @param transactionsToCompare Collection of {@link Transaction} to be compared with.
-     * @param ratio The value that determines the precision of the search algorithm. The higher the ratio, the scarier the search results.
+     * @param ratio                 The value that determines the precision of the search algorithm. The higher the ratio,
+     *                              the scarier the search results.
      * @return Collection of {@link Transaction} objects that meets the matching strategy criteria.
      */
     @Override

@@ -1,5 +1,7 @@
 package be.jorisgulinck.filecomparator.controllers;
 
+import be.jorisgulinck.filecomparator.comparison.fuzzy.FuzzyComparator;
+import be.jorisgulinck.filecomparator.comparison.fuzzy.FuzzyComparatorFactory;
 import be.jorisgulinck.filecomparator.dto.ComparisonResultDto;
 import be.jorisgulinck.filecomparator.dto.FuzzyComparisonResultDto;
 import be.jorisgulinck.filecomparator.services.ValidationService;
@@ -22,6 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
+/**
+ * Controller class for mapping requests.
+ */
 @RequiredArgsConstructor
 @Controller
 public class TransactionController {
@@ -30,12 +35,14 @@ public class TransactionController {
     private final ComparisonService comparisonService;
     private final ValidationService validationService;
 
-    // TODO finnish testing
-    // TODO make proper documentation
-    // TODO deploy on heroku
-
     /**
-     * Controller for uploading the two csv files and comparison between the two collections of Transaction
+     * Maps the incoming request for uploading the two csv files and comparison between the two collections of Transaction.
+     *
+     * @param file1   Csv file one as a MultipartFile.
+     * @param file2   Csv file two as a MultipartFile.
+     * @param session HttpSession.
+     * @return ModelAndView object.
+     * @throws Exception
      */
     @PostMapping("/upload")
     public ModelAndView uploadData(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2, HttpSession session) throws Exception {
@@ -75,6 +82,17 @@ public class TransactionController {
         return modelAndView;
     }
 
+    /**
+     * Maps the incoming request for creating the fuzzy comparison page.
+     *
+     * @param id              String of id of {@link Transaction}.
+     * @param file            String of file name of {@link Transaction}.
+     * @param matchingRoutine The name of the <i>matching strategy</i> used by {@link FuzzyComparatorFactory} for the
+     *                        creation of the correct implementation of {@link FuzzyComparator}.
+     * @param ratio           The value that determines the precision of the search algorithm.
+     * @param session         HttpSession.
+     * @return ModelAndView object.
+     */
     @GetMapping("/compare")
     public ModelAndView compareFuzzy(
             @RequestParam("id") String id,
@@ -90,7 +108,7 @@ public class TransactionController {
         FuzzyParamsValidationResult validatedFuzzyParams = validationService.validateFuzzyParams(matchingRoutine, ratio);
         if (!validatedFuzzyParams.isValidationError()) {
 
-            FuzzyComparisonResultDto comparisonResult= comparisonService.createFuzzyComparisonResult(
+            FuzzyComparisonResultDto comparisonResult = comparisonService.createFuzzyComparisonResult(
                     id, file, comparisonResultOfFile1.getFilteredList(), comparisonResultOfFile2.getFilteredList(),
                     matchingRoutine, ratio);
 
@@ -111,6 +129,12 @@ public class TransactionController {
         return modelAndView;
     }
 
+    /**
+     * Maps the incoming request for creating the strict comparison page.
+     *
+     * @param session HttpSession.
+     * @return ModelAndView object.
+     */
     @GetMapping("/comparison-page")
     public ModelAndView comparisonPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();

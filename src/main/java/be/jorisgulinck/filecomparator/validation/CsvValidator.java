@@ -34,7 +34,8 @@ public class CsvValidator {
 
             if (!matcher.find()) {
                 validationResult.setValidationError(true);
-                validationResult.addErrorMessage("Please upload a csv file with correct headers: " + header + " is not a valid header name.");
+                validationResult.addErrorMessage("Please upload a csv file with correct headers: " + header + " is " +
+                        "not a valid header name.");
             }
         }
         return validationResult;

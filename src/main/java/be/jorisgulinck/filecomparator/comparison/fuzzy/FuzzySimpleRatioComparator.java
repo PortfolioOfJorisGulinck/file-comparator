@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Compares a collection of {@link Transaction} with a given {@link Transaction} for similarity using the FuzzyWuzzy Python algorithm.
- * The Simple Ratio function compares two strings by measuring the difference between two sequences. For this it uses
- * the Levenshtein distance algorithm.
+ * Compares a collection of {@link Transaction} with a given {@link Transaction} for similarity using the FuzzyWuzzy Python
+ * algorithm. The Simple Ratio function compares two strings by measuring the difference between two sequences. For this it
+ * uses the Levenshtein distance algorithm.
  */
 @Component
 public class FuzzySimpleRatioComparator implements FuzzyComparator {
@@ -19,10 +19,13 @@ public class FuzzySimpleRatioComparator implements FuzzyComparator {
     }
 
     /**
-     * Compares a collection of {@link Transaction} with a given {@link Transaction} object for similarity using the <i>Simple Ratio</i> strategy of FuzzyWuzzy.
-     * @param transaction Transaction object that compares itself with a given collection of {@link Transaction}.
+     * Compares a collection of {@link Transaction} with a given {@link Transaction} object for similarity using the
+     * <i>Simple Ratio</i> strategy of FuzzyWuzzy.
+     *
+     * @param transaction           Transaction object that compares itself with a given collection of {@link Transaction}.
      * @param transactionsToCompare Collection of {@link Transaction} to be compared with.
-     * @param ratio The value that determines the precision of the search algorithm. The higher the ratio, the scarier the search results.
+     * @param ratio                 The value that determines the precision of the search algorithm. The higher the ratio, the scarier
+     *                              the search results.
      * @return Collection of {@link Transaction} objects that meets the matching strategy criteria.
      */
     @Override

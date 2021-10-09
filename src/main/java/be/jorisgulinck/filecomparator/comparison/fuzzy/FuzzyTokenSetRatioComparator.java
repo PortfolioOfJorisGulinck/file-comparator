@@ -7,29 +7,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>Compares a collection of {@link Transaction} with a given {@link Transaction} object for similarity using the FuzzyWuzzy Python algorithm.
- * The Token Sort Ratio function compares two strings by measuring the difference between two sequences. For this it uses
- * the Levenshtein distance algorithm.</p>
+ * <p>Compares a collection of {@link Transaction} with a given {@link Transaction} object for similarity using the FuzzyWuzzy
+ * Python algorithm. The Token Sort Ratio function compares two strings by measuring the difference between two sequences.
+ * For this it uses the Levenshtein distance algorithm.</p>
  *
  * <p>The problem with the Simple Ratio & Partial Ratio function is that not only inconsistent substrings give an unjustified
  * low score, but we also have to deal with differences in string construction.
- * To get around it, you can use the Token Sort Ratio algorithm. The token sort approach involves tokenizing the string in question,
- * sorting the tokens alphabetically, and then joining them back into a string.</p>
+ * To get around it, you can use the Token Sort Ratio algorithm. The token sort approach involves tokenizing the string in
+ * question, sorting the tokens alphabetically, and then joining them back into a string.</p>
  *
- * <p>The token set approach is similar, but a little bit more flexible. Here, it tokenizes both strings, but instead of immediately
- * sorting and comparing, it splits the tokens into two groups: intersection and remainder. It uses those sets to build up
- * a comparison string. Then it compares the transformed strings with a Simple Ratio.</p>
+ * <p>The token set approach is similar, but a little bit more flexible. Here, it tokenizes both strings, but instead of
+ * immediately sorting and comparing, it splits the tokens into two groups: intersection and remainder. It uses those sets
+ * to build up a comparison string. Then it compares the transformed strings with a Simple Ratio.</p>
  */
-public class FuzzyTokenSetRatioComparator implements FuzzyComparator{
+public class FuzzyTokenSetRatioComparator implements FuzzyComparator {
 
     public FuzzyTokenSetRatioComparator() {
     }
 
     /**
-     * Compares a collection of {@link Transaction} with a given {@link Transaction} for similarity using the <i>Token Set Ratio</i> strategy of FuzzyWuzzy.
-     * @param transaction Transaction object that compares itself with a given collection of {@link Transaction}.
+     * Compares a collection of {@link Transaction} with a given {@link Transaction} for similarity using the
+     * <i>Token Set Ratio</i> strategy of FuzzyWuzzy.
+     *
+     * @param transaction           Transaction object that compares itself with a given collection of {@link Transaction}.
      * @param transactionsToCompare Collection of {@link Transaction} to be compared with.
-     * @param ratio The value that determines the precision of the search algorithm. The higher the ratio, the scarier the search results.
+     * @param ratio                 The value that determines the precision of the search algorithm. The higher the ratio,
+     *                              the scarier the search results.
      * @return Collection of {@link Transaction} objects that meets the matching strategy criteria.
      */
     @Override
