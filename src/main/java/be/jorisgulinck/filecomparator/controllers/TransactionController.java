@@ -30,7 +30,6 @@ public class TransactionController {
     private final ComparisonService comparisonService;
     private final ValidationService validationService;
 
-    // TODO refactor where possible
     // TODO finnish testing
     // TODO make proper documentation
     // TODO deploy on heroku
@@ -114,15 +113,17 @@ public class TransactionController {
 
     @GetMapping("/comparison-page")
     public ModelAndView comparisonPage(HttpSession session) {
-
         ModelAndView modelAndView = new ModelAndView();
         ComparisonResultDto comparisonResultOfFile1 = (ComparisonResultDto) session.getAttribute("filteredListOfFile1");
         ComparisonResultDto comparisonResultOfFile2 = (ComparisonResultDto) session.getAttribute("filteredListOfFile2");
 
-        modelAndView.setViewName("first-comparison");
-        modelAndView.addObject("comparisonOfFile1", comparisonResultOfFile1);
-        modelAndView.addObject("comparisonOfFile2", comparisonResultOfFile2);
-
+        if (comparisonResultOfFile1 != null && comparisonResultOfFile2 != null) {
+            modelAndView.setViewName("first-comparison");
+            modelAndView.addObject("comparisonOfFile1", comparisonResultOfFile1);
+            modelAndView.addObject("comparisonOfFile2", comparisonResultOfFile2);
+        } else {
+            modelAndView.setViewName("index");
+        }
         return modelAndView;
     }
 }

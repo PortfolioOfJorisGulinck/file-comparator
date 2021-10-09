@@ -1,10 +1,15 @@
 package be.jorisgulinck.filecomparator.comparison.fuzzy;
 
 /**
- * A factory class for the creation of an implementation of the FuzzyComparator interface.
+ * Factory class for the creation of a {@link FuzzyComparator} implementation.
  */
 public class FuzzyComparatorFactory {
 
+    /**
+     * Factory method for the creation of a {@link FuzzyComparator} implementation.
+     * @param matchingRoutine A string value that defines the which {@link FuzzyComparator} implementation will be created.
+     * @return An implementation class of {@link FuzzyComparator}.
+     */
     public FuzzyComparator createFuzzyComparator(String matchingRoutine) {
         if (matchingRoutine == null) {
             return null;

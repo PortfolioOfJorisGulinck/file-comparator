@@ -9,6 +9,7 @@ import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import be.jorisgulinck.filecomparator.validation.ValidationResult;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Maps the incoming csv file to a Transaction model object
+ * Maps the incoming csv file to a {@link ValidationResult} implementation.
  */
 @Component
 @RequiredArgsConstructor
@@ -26,6 +27,12 @@ public class CsvMapper {
     private final ValidationService validationService;
     private final ParseUtilities parseUtilities;
 
+    /**
+     * Maps and validates the incoming csv file to an implementation of the {@link ValidationResult} interface.
+     * @param inputStream Stream of bytes that delivers the csv file, which needs to be mapped to a collection of {@link Transaction}.
+     * @param fileName String with the name of the file. The name can be for example <i>file1</i> or <i>file2</i>.
+     * @return {@link CsvValidationResult}
+     */
     public CsvValidationResult mapAndValidate(InputStream inputStream, String fileName) {
         CsvValidationResult validationResult = new CsvValidationResult();
         CsvParser parser = new CsvParser(new CsvParserSettings());

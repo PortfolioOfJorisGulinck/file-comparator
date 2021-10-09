@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * Model class that represents the values of a financial transaction.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -30,9 +33,10 @@ public class Transaction {
     }
 
     /**
-     * compares the equality of a Transaction object with the properties:
-     * transactionId, profileName,transactionDate,transactionAmount,transactionNarrative,
-     * transactionDescription,transactionType,walletReference
+     * Compares the equality of a Transaction object with the properties: transactionId, profileName,transactionDate,
+     * transactionAmount,transactionNarrative, transactionDescription,transactionType,walletReference.
+     * @param o Object that needs to be compared.
+     * @return Boolean value of the comparison. Returns true if the object is equal to the other object.
      */
     @Override
     public boolean equals(Object o) {
@@ -48,6 +52,11 @@ public class Transaction {
                                                 walletReference, that.walletReference);
     }
 
+    /**
+     * Calculates a numerical value of the object using the properties: transactionId, profileName,transactionDate,
+     * transactionAmount,transactionNarrative, transactionDescription,transactionType,walletReference
+     * @return HashCode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(transactionId, profileName, transactionDate, transactionAmount,

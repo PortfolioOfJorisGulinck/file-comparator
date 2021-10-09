@@ -1,0 +1,10 @@
+be.jorisgulinck.filecomparator
+be.jorisgulinck.filecomparator.comparison.fuzzy
+be.jorisgulinck.filecomparator.comparison.strict
+be.jorisgulinck.filecomparator.controllers
+be.jorisgulinck.filecomparator.dto
+be.jorisgulinck.filecomparator.mappers
+be.jorisgulinck.filecomparator.models
+be.jorisgulinck.filecomparator.services
+be.jorisgulinck.filecomparator.utilities
+be.jorisgulinck.filecomparator.validation

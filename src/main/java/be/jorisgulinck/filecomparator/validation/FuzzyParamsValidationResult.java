@@ -1,8 +1,14 @@
 package be.jorisgulinck.filecomparator.validation;
 
+import be.jorisgulinck.filecomparator.comparison.fuzzy.FuzzyComparator;
+
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Summarizes the results of the validation of the incoming parameters used by {@link FuzzyComparator},
+ * created by {@link FuzzyParamsValidator}.
+ */
 public class FuzzyParamsValidationResult implements ValidationResult {
     private List<String> errorMessages;
     private boolean validationError;

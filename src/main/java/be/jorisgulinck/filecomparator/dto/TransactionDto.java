@@ -1,10 +1,14 @@
 package be.jorisgulinck.filecomparator.dto;
 
+import be.jorisgulinck.filecomparator.models.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Data transfer class of {@link Transaction}
+ */
 @Getter
 @Setter
 @NoArgsConstructor

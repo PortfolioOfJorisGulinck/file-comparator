@@ -5,6 +5,9 @@ import be.jorisgulinck.filecomparator.models.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Summarizes the results of the validation of a csv file, created by {@link CsvValidator}.
+ */
 public class CsvValidationResult implements ValidationResult {
 
     private List<Transaction> validatedListOfTransactions;

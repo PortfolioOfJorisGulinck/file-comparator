@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Data transfer class that summarizes the data displayed in the <i>second-comparison</i> view page.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

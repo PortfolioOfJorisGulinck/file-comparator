@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+/**
+ * A service class that compares two collections of {@link Transaction} or a {@link Transaction} object with a collection
+ * of {@link Transaction}. For comparing, this class, uses different comparing strategies.
+ */
 @Service
 public class ComparisonService {
 
@@ -23,6 +27,13 @@ public class ComparisonService {
         this.dtoMapper = new DtoMapper();
     }
 
+    /**
+     * Creates a comparison between two collections of {@link Transaction}, by using an implementation of {@link StrictComparator}.
+     *
+     * @param originalList      Collection of {@link Transaction}.
+     * @param otherOriginalList Other collection of {@link Transaction}.
+     * @return Returns the compared data as a {@link ComparisonResultDto} object.
+     */
     public ComparisonResultDto createComparisonResult(List<Transaction> originalList, List<Transaction> otherOriginalList) {
         ComparisonResultDto comparisonResultDto = new ComparisonResultDto();
 
@@ -40,6 +51,19 @@ public class ComparisonService {
         return comparisonResultDto;
     }
 
+    /**
+     * Creates a comparison between a {@link Transaction} and a collection of {@link Transaction}, by using an
+     * implementation of {@link FuzzyComparator}.
+     *
+     * @param id              The id of the {@link Transaction}.
+     * @param file            The name of the file of {@link Transaction}.
+     * @param listOfFile1     Collection of {@link Transaction} of file1.
+     * @param listOfFile2     Collection of {@link Transaction} of file2.
+     * @param matchingRoutine The name of the <i>matching strategy</i> used by {@link FuzzyComparatorFactory} for the creation
+     *                        of the correct implementation of {@link FuzzyComparator}.
+     * @param ratio           The value that determines the precision of the search algorithm.
+     * @return Returns the compared data as a {@link FuzzyComparisonResultDto} object.
+     */
     public FuzzyComparisonResultDto createFuzzyComparisonResult(String id, String file, List<TransactionDto> listOfFile1,
                                                                 List<TransactionDto> listOfFile2, String matchingRoutine, String ratio) {
         TransactionDto comparisonTransaction;
@@ -53,7 +77,7 @@ public class ComparisonService {
 
             fuzzyMatchedDtoList = compareFuzzy(
                     comparisonTransaction, listOfFile2, matchingRoutine, Integer.parseInt(ratio));
-        } else if(file.equals("file2")){
+        } else if (file.equals("file2")) {
             comparisonTransaction = listOfFile2
                     .stream()
                     .filter(transactionDto -> id.equals(transactionDto.getId()))
@@ -70,16 +94,26 @@ public class ComparisonService {
     }
 
     /**
-     * Compares two collections of Transaction for similarity using the TransactionComparator class
+     * Compares two collections of {@link Transaction} for similarity using an implementation of {@link StrictComparator}.
+     *
+     * @param listOfTransactions      Collection of {@link Transaction}.
+     * @param otherListOfTransactions Other collection of {@link Transaction}.
+     * @return Collection of {@link Transaction} that didn't match.
      */
-    public List<Transaction> compareStrict(List<Transaction> listOfTransactions1, List<Transaction> listOfTransactions2) {
+    public List<Transaction> compareStrict(List<Transaction> listOfTransactions, List<Transaction> otherListOfTransactions) {
         StrictComparator strictComparator = new StrictEqualsComparator();
-        return strictComparator.compareTransactionsStrict(listOfTransactions1, listOfTransactions2);
+        return strictComparator.compareTransactionsStrict(listOfTransactions, otherListOfTransactions);
     }
 
     /**
-     * Compares a collection of Transaction with a Transaction for similarity in a fuzzy way using
-     * the TransactionComparator class
+     * Compares two collections of {@link Transaction} for similarity using an implementation of {@link FuzzyComparator}.
+     *
+     * @param transactionDto        {@link TransactionDto}
+     * @param listOfTransactionDtos Collection of {@link TransactionDto}
+     * @param matchingRoutine       The name of the <i>matching strategy</i> used by {@link FuzzyComparatorFactory} for
+     *                              the creation of the correct implementation of {@link FuzzyComparator}.
+     * @param ratio                 The value that determines the precision of the search algorithm.
+     * @return Collection of {@link Transaction} that match the search criteria.
      */
     public List<Transaction> compareFuzzy(TransactionDto transactionDto, List<TransactionDto> listOfTransactionDtos, String matchingRoutine, int ratio) {
         FuzzyComparatorFactory fuzzyComparatorFactory = new FuzzyComparatorFactory();
