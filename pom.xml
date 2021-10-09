@@ -14,7 +14,7 @@
     <name>file-comparator</name>
     <description>Compares two csv files for differences</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencyManagement>
