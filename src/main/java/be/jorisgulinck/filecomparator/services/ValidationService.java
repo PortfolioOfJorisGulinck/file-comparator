@@ -7,6 +7,8 @@ import be.jorisgulinck.filecomparator.validation.ValidationResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ValidationService {
@@ -18,7 +20,15 @@ public class ValidationService {
         return fuzzyParamsValidator.validateFuzzyParams(matchingRoutine, ratio);
     }
 
-    public ValidationResult validateCsvFile(CsvValidationResult validationResult) {
-        return csvValidator.validateCsvFile(validationResult);
+    public ValidationResult validateCsvHeaders(ValidationResult validationResult, List<String> headers) {
+        return csvValidator.validateCsvHeaders(headers, validationResult);
+    }
+
+    public ValidationResult validateTransactionDate(ValidationResult validationResult, String date) {
+        return csvValidator.validateTransactionDate(date, validationResult);
+    }
+
+    public ValidationResult validateTransactionId(ValidationResult validationResult, String id) {
+        return csvValidator.validateTransactionId(id, validationResult);
     }
 }

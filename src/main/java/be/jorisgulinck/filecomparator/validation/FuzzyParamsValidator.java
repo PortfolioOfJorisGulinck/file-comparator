@@ -17,17 +17,17 @@ public class FuzzyParamsValidator {
     }
 
     private boolean validateRatio(String ratio) {
-        return ratio.contains("75") || ratio.contains("80") || ratio.contains("85") ||
-                ratio.contains("90") || ratio.contains("95");
+        return ratio.equals("75") || ratio.equals("80") || ratio.equals("85") ||
+                ratio.equals("90") || ratio.equals("95");
     }
 
     private boolean validateMatchingRoutine(String matchingRoutine) {
-        return matchingRoutine.contains("Simple Ratio") ||
-                matchingRoutine.contains("Partial Ratio") ||
-                matchingRoutine.contains("Token Sort Ratio") ||
-                matchingRoutine.contains("Token Sort Partial Ratio") ||
-                matchingRoutine.contains("Token Set Ratio") ||
-                matchingRoutine.contains("Token Set Partial Ratio") ||
-                matchingRoutine.contains("Weighted Ratio");
+        return matchingRoutine.equals("Simple Ratio") ||
+                matchingRoutine.equals("Partial Ratio") ||
+                matchingRoutine.equals("Token Sort Ratio") ||
+                matchingRoutine.equals("Token Sort Partial Ratio") ||
+                matchingRoutine.equals("Token Set Ratio") ||
+                matchingRoutine.equals("Token Set Partial Ratio") ||
+                matchingRoutine.equals("Weighted Ratio");
     }
 }

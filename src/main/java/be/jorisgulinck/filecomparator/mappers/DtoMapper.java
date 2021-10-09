@@ -19,27 +19,22 @@ public class DtoMapper {
 
     private final ModelMapper modelMapper = new ModelMapper();
 
-    public ComparisonResultDto createComparisonResult(List<Transaction> originalList, List<Transaction> comparedResult) {
-        ComparisonResultDto comparisonResultDto = new ComparisonResultDto();
-        comparisonResultDto.setTotalRecords(originalList.size());
-        comparisonResultDto.setMatchingRecords(originalList.size() - comparedResult.size());
-        comparisonResultDto.setUnmatchedRecords(comparedResult.size());
-
-        Set<Transaction> uniqueListOfTransactions = new HashSet<>(originalList);
-
-        comparisonResultDto.setNumberOfDuplicates(originalList.size() - uniqueListOfTransactions.size());
-
-        return comparisonResultDto;
-    }
-
     private TransactionDto transactionToTransactionDto(Transaction transaction) {
         return modelMapper.map(transaction, TransactionDto.class);
     }
 
-    public Set<TransactionDto> createListOfUniqueTransactionDtos(List<Transaction> transactions) {
-        Set<TransactionDto> uniqueTransactionDtos = new HashSet<>();
-        transactions.forEach(transaction -> uniqueTransactionDtos.add(transactionToTransactionDto(transaction)));
-        return uniqueTransactionDtos;
+    public List<Transaction> createListOfUniqueTransactions(List<Transaction> transactions) {
+        Set<Transaction> uniqueTransactionSet = new HashSet<>();
+        transactions.forEach(transaction -> uniqueTransactionSet.add(transaction));
+        List<Transaction> uniqueTransactionList = new ArrayList<>();
+        uniqueTransactionSet.forEach(transaction -> uniqueTransactionList.add(transaction));
+        return uniqueTransactionList;
+    }
+
+    public List<Transaction> createListOfTransactions(List<TransactionDto> transactionsDto) {
+        List<Transaction> transactions = new ArrayList<>();
+        transactionsDto.forEach(transactionDto -> transactions.add(transactionDtoToTransaction(transactionDto)));
+        return transactions;
     }
 
     public List<TransactionDto> createListOfTransactionDtos(List<Transaction> transactions) {

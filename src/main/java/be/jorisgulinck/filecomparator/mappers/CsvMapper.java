@@ -9,6 +9,7 @@ import be.jorisgulinck.filecomparator.validation.ValidationResult;
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,57 +30,67 @@ public class CsvMapper {
     private final ParseUtilities parseUtilities;
 
     public ValidationResult mapAndValidate(InputStream inputStream, String fileName) {
+        // CsvParserSettings settings = new CsvParserSettings();
+        //settings.setHeaderExtractionEnabled(true); //removes the title row of the csv file
+        //CsvParser parser = new CsvParser(settings);
 
-        CsvParserSettings settings = new CsvParserSettings();
-        settings.setHeaderExtractionEnabled(true); //removes the title row of the csv file
-        CsvParser parser = new CsvParser(settings);
+        ValidationResult validationResult = new CsvValidationResult();
+        CsvParser parser = new CsvParser(new CsvParserSettings());
+        parser.beginParsing(inputStream);
+        List<String> headers = Arrays.asList(parser.parseNext());
+        validationResult = validationService.validateCsvHeaders(validationResult, headers);
 
-        CsvValidationResult validationResult = new CsvValidationResult();
+        if (!validationResult.isValidationError()) {
+            Record record = parser.parseNextRecord();
+            while (record != null) {
 
-        List<Record> parseAllRecords = parser.parseAllRecords(inputStream);
-        parseAllRecords.forEach(record -> {
-            Transaction transaction = new Transaction();
-            transaction.setProfileName(record.getString("ProfileName"));
+                //List<Record> parseAllRecords = parser.parseAllRecords(inputStream);
+                // parseAllRecords.forEach(record -> {
+                Transaction transaction = new Transaction();
+                transaction.setProfileName(record.getString("ProfileName"));
 
-            if (parseUtilities.tryParseDate(record.getString("TransactionDate"))){
-                transaction.setTransactionDate(mapTransactionDate(record.getString("TransactionDate")));
-            } else {
-                transaction.setTransactionDate("Not a valid date");
+                validationResult = validationService.validateTransactionDate(validationResult,
+                        record.getString("TransactionDate"));
+                if (!validationResult.isValidationError()) {
+                    transaction.setTransactionDate(mapTransactionDate(record.getString("TransactionDate")));
+                }
+                //updatedValidationResult2.getErrorMessages().forEach(validationResult::addErrorMessage);
+
+                transaction.setTransactionAmount(record.getString("TransactionAmount"));
+                transaction.setTransactionNarrative(record.getString("TransactionNarrative"));
+                transaction.setTransactionDescription(record.getString("TransactionDescription"));
+
+                validationResult = validationService.validateTransactionId(validationResult,
+                        record.getString("TransactionID"));
+                if (!validationResult.isValidationError()) {
+                    transaction.setTransactionId(record.getString("TransactionID"));
+                }
+               // updatedValidationResult3.getErrorMessages().forEach(validationResult::addErrorMessage);
+
+                transaction.setTransactionType(record.getString("TransactionType"));
+                transaction.setWalletReference(record.getString("WalletReference"));
+                transaction.setFileName(fileName);
+
+                validationResult.addTransaction(transaction);
+                record = parser.parseNextRecord();
             }
-
-            transaction.setTransactionAmount(record.getString("TransactionAmount"));
-            transaction.setTransactionNarrative(record.getString("TransactionNarrative"));
-            transaction.setTransactionDescription(record.getString("TransactionDescription"));
-            transaction.setTransactionId(record.getString("TransactionID"));
-            transaction.setTransactionType(record.getString("TransactionType"));
-            transaction.setWalletReference(record.getString("WalletReference"));
-            transaction.setFileName(fileName);
-
-            validationResult.addTransaction(transaction);
-        });
-
-        /*
-
-        // TODO fix this bug
-        List<String> headers = extractHeaders(inputStream);
-        if (validator.validateCsvHeaders(headers)) {
-            validationResult.addErrorMessage("Please upload a csv file with correct headers: ProfileName, TransactionDate, " +
-                    "TransactionAmount, TransactionNarrative, TransactionDescription, TransactionID, TransactionType, " +
-                    "WalletReference");
         }
-        */
 
-        return validationService.validateCsvFile(validationResult);
+        //updatedValidationResult.getErrorMessages().forEach(validationResult::addErrorMessage);
+        return validationResult;
     }
 
-    private List<String> extractHeaders(InputStream inputStream) {
+    /*
+    public ValidationResult mapHeaders(InputStream inputStream) {
+        ValidationResult validationResult = new CsvValidationResult();
         CsvParser parser = new CsvParser(new CsvParserSettings());
         parser.beginParsing(inputStream);
         List<String> headers = Arrays.asList(parser.parseNext());
         parser.stopParsing();
 
-        return headers;
+        return validationService.validateCsvHeaders(validationResult, headers);
     }
+    */
 
     private String mapTransactionDate(String date) {
         LocalDateTime transactionDateTime = LocalDateTime.parse((date), DateTimeFormatter.ofPattern(

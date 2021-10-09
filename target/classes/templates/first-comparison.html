@@ -16,19 +16,19 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-8">Total records:</div>
-                            <div class="col-4" th:text="${comparisons.get(0).getTotalRecords}"></div>
+                            <div class="col-4" th:text="${comparisonOfFile1.getTotalRecords}"></div>
                         </div>
                         <div class="row">
                             <div class="col-8">Matching records:</div>
-                            <div class="col-4" th:text="${comparisons.get(0).getMatchingRecords()}"></div>
+                            <div class="col-4" th:text="${comparisonOfFile1.getMatchingRecords()}"></div>
                         </div>
                         <div class="row">
                             <div class="col-8">Unmatched records:</div>
-                            <div class="col-4" th:text="${comparisons.get(0).getUnmatchedRecords()}"></div>
+                            <div class="col-4" th:text="${comparisonOfFile1.getUnmatchedRecords()}"></div>
                         </div>
                         <div class="row">
                             <div class="col-8">Number of duplicates:</div>
-                            <div class="col-4" th:text="${comparisons.get(0).getNumberOfDuplicates()}"></div>
+                            <div class="col-4" th:text="${comparisonOfFile1.getNumberOfDuplicates()}"></div>
                         </div>
                     </div>
                 </div>
@@ -40,19 +40,19 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-8">Total records:</div>
-                            <div class="col-4" th:text="${comparisons.get(1).getTotalRecords}"></div>
+                            <div class="col-4" th:text="${comparisonOfFile2.getTotalRecords}"></div>
                         </div>
                         <div class="row">
                             <div class="col-8">Matching records:</div>
-                            <div class="col-4" th:text="${comparisons.get(1).getMatchingRecords()}"></div>
+                            <div class="col-4" th:text="${comparisonOfFile2.getMatchingRecords()}"></div>
                         </div>
                         <div class="row">
                             <div class="col-8">Unmatched records:</div>
-                            <div class="col-4" th:text="${comparisons.get(1).getUnmatchedRecords()}"></div>
+                            <div class="col-4" th:text="${comparisonOfFile2.getUnmatchedRecords()}"></div>
                         </div>
                         <div class="row">
                             <div class="col-8">Number of duplicates:</div>
-                            <div class="col-4" th:text="${comparisons.get(1).getNumberOfDuplicates()}"></div>
+                            <div class="col-4" th:text="${comparisonOfFile2.getNumberOfDuplicates()}"></div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="filteredTransaction : ${unmatchedTransactionsOfList1}">
+            <tr th:each="filteredTransaction : ${comparisonOfFile1.getFilteredList()}">
                 <td th:text="${filteredTransaction.getTransactionId()}"></td>
                 <td th:text="${filteredTransaction.getTransactionDate()}"></td>
                 <td th:text="${filteredTransaction.getWalletReference()}"></td>
@@ -107,7 +107,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="filteredTransaction : ${unmatchedTransactionsOfList2}">
+            <tr th:each="filteredTransaction : ${comparisonOfFile2.getFilteredList()}">
                 <td th:text="${filteredTransaction.getTransactionId()}"></td>
                 <td th:text="${filteredTransaction.getTransactionDate()}"></td>
                 <td th:text="${filteredTransaction.getWalletReference()}"></td>

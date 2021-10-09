@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 @RequiredArgsConstructor
@@ -14,97 +16,37 @@ public class CsvValidator {
 
     private final ParseUtilities parseUtilities;
 
-    public boolean validateCsvHeaders(List<String> headers) {
-        // TODO fix this bug
-        boolean error = false;
+    public ValidationResult validateCsvHeaders(List<String> headers, ValidationResult validationResult) {
 
         for (String header : headers) {
-            if (!header.equals("ProfileName") || !header.equals("TransactionDate") || !header.equals("TransactionAmount") ||
-                    !header.equals("TransactionNarrative") || !header.equals("TransactionDescription") || !header.equals("TransactionID")
-                    || !header.equals("TransactionType") || !header.equals("WalletReference")) {
-                error = true;
+            Pattern pattern = Pattern.compile("(ProfileName|TransactionDate|TransactionAmount|TransactionNarrative|" +
+                    "TransactionDescription|TransactionID|TransactionType|WalletReference)", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(header);
+
+            if (!matcher.find()){
+                validationResult.setValidationError(true);
+                validationResult.addErrorMessage("Please upload a csv file with correct headers: " + header + " is not a valid header name.");
             }
         }
-        return error;
+        return validationResult;
     }
 
-
-    /**
-     * Validates the csv file data for the valid properties. Not included: transactionNarrative
-     */
-    public CsvValidationResult validateCsvFile(CsvValidationResult csvValidationResult) {
-
-        csvValidationResult.getValidatedListOfTransactions().forEach(transaction -> {
-            if (validateProfileName(transaction.getProfileName())) {
-                csvValidationResult.setValidationError(true);
-                csvValidationResult.addErrorMessage("There was a problem reading the profile name.");
-            }
-
-            if (validateTransactionDate(transaction.getTransactionDate())) {
-                csvValidationResult.setValidationError(true);
-                csvValidationResult.addErrorMessage("There was a problem reading the transaction date.");
-            }
-
-            if (validateTransactionAmount(transaction.getTransactionAmount())) {
-                csvValidationResult.setValidationError(true);
-                csvValidationResult.addErrorMessage("There was a problem reading the transaction amount.");
-            }
-
-            if (validateTransactionDescription(transaction.getTransactionDescription())) {
-                csvValidationResult.setValidationError(true);
-                csvValidationResult.addErrorMessage("There was a problem reading the transaction description.");
-            }
-
-            if (validateTransactionID(transaction.getTransactionId())) {
-                csvValidationResult.setValidationError(true);
-                csvValidationResult.addErrorMessage("There was a problem reading the transaction id.");
-            }
-
-            if (validateTransactionType(transaction.getTransactionType())) {
-                csvValidationResult.setValidationError(true);
-                csvValidationResult.addErrorMessage("There was a problem reading the transaction type.");
-            }
-
-            if (validateWalletReference(transaction.getWalletReference())) {
-                csvValidationResult.setValidationError(true);
-                csvValidationResult.addErrorMessage("There was a problem reading the wallet reference.");
-            }
-        });
-
-        return csvValidationResult;
+    public ValidationResult validateTransactionDate(String date, ValidationResult validationResult) {
+        if (!parseUtilities.tryParseDate(date)){
+            validationResult.setValidationError(true);
+            validationResult.addErrorMessage("There was a problem reading the transaction date.");
+        }
+        return validationResult;
     }
 
-    private boolean validateProfileName(String name) {
-        return !(name.equals("Card Campaign"));
+    public ValidationResult validateTransactionId(String id, ValidationResult validationResult) {
+        Pattern pattern = Pattern.compile("\\d{16}");
+        Matcher matcher = pattern.matcher(id);
+        if (!matcher.find()){
+            validationResult.setValidationError(true);
+            validationResult.addErrorMessage("There was a problem reading the transaction id.");
+        }
+        return validationResult;
     }
 
-    private boolean validateTransactionDate(String date) {
-        return !(parseUtilities.tryParseDate(date));
-    }
-
-    private boolean validateTransactionAmount(String amount) {
-        return !(parseUtilities.tryParseInt(amount));
-    }
-
-    private boolean validateTransactionDescription(String description) {
-        // TODO fix this bug
-        //return !(description.equals("DEDUCT"));
-        return false;
-    }
-
-    private boolean validateTransactionID(String id) {
-        // TODO fix this bug
-        //return (!(parseUtilities.tryParseInt(id) && !(id.length() == 16)));
-        return false;
-    }
-
-    private boolean validateTransactionType(String type) {
-        return !(type.equals("0") || type.equals("1"));
-    }
-
-    private boolean validateWalletReference(String reference) {
-        // TODO fix this bug
-        // return !(reference.startsWith("P_N") && !(reference.length() == 34));
-        return false;
-    }
 }

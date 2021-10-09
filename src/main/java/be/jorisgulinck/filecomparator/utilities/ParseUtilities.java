@@ -34,4 +34,18 @@ public class ParseUtilities {
         }
         return true;
     }
+
+    /*
+    public boolean tryParseEnotation(String numberString) {
+        if (numberString == null) {
+            return false;
+        }
+        try {
+            double formattedNumber = Double.valueOf(numberString).longValue();
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+        return true;
+    }
+    */
 }

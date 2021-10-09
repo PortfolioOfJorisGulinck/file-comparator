@@ -1,62 +1,95 @@
 package be.jorisgulinck.filecomparator.services;
 
-import be.jorisgulinck.filecomparator.comparison.fuzzy.FuzzySimpleRatioComparator;
-import be.jorisgulinck.filecomparator.comparison.strict.StrictEqualsComparator;
 import be.jorisgulinck.filecomparator.models.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class ComparisonServiceTest {
 
-    // TODO fix the bug in ComparisonServiceTest
-
-    @Mock
-    private FuzzySimpleRatioComparator fuzzySimpleRatioComparator;
-
-    @Mock
-    private StrictEqualsComparator strictEqualsComparator;
-
-    @InjectMocks
     private ComparisonService comparisonService;
-
     private List<Transaction> listOfTransactions1;
     private List<Transaction> listOfTransactions2;
-    private List<Transaction> filteredList;
+    private Transaction transaction;
 
     @BeforeEach
     void setUp() {
-       listOfTransactions1 = new ArrayList<>(Arrays.asList(new Transaction("ID1"), new Transaction("ID2"), new Transaction("ID3")));
-       listOfTransactions2 = new ArrayList<>(Arrays.asList(new Transaction("ID1"), new Transaction("ID 2"), new Transaction("ID 3")));
-       filteredList = new ArrayList<>(Arrays.asList(new Transaction("ID 2")));
+        comparisonService = new ComparisonService();
+        transaction = new Transaction(
+                "ID2",
+                "profileName2",
+                "transactionDate2",
+                "transactionAmount2",
+                "transactionNarrative2",
+                "transactionDescription2",
+                "transactionType2",
+                "walletReference2",
+                "fileName",
+                "0");
+        listOfTransactions1 = new ArrayList<>(Arrays.asList(
+                new Transaction("ID2",
+                        "profileName2",
+                        "transactionDate2",
+                        "transactionAmount2",
+                        "transactionNarrative2",
+                        "transactionDescription2",
+                        "transactionType2",
+                        "walletReference2",
+                        "fileName",
+                        "0"),
+                new Transaction("ID3",
+                        "profileName3",
+                        "transactionDate3",
+                        "transactionAmount3",
+                        "transactionNarrative3",
+                        "transactionDescription3",
+                        "transactionType3",
+                        "walletReference3",
+                        "fileName",
+                        "0")));
+        listOfTransactions2 = new ArrayList<>(Arrays.asList(
+                new Transaction("ID2",
+                        "profileName2",
+                        "transactionDate2",
+                        "transactionAmount2",
+                        "transactionNarrative2",
+                        "transactionDescription2",
+                        "transactionType2",
+                        "walletReference2",
+                        "fileName",
+                        "0"),
+                new Transaction("ID 3",
+                        "profileName3",
+                        "transactionDate3",
+                        "transaction Amount3",
+                        "transactionNarrative3",
+                        "transaction Description3",
+                        "transactionType3",
+                        "walletReference3",
+                        "fileName",
+                        "0")));
     }
 
     @Test
     void compareStrict() {
-        when(strictEqualsComparator.compareTransactionsStrict(listOfTransactions1, listOfTransactions2)).thenReturn(filteredList);
         List<Transaction> comparedList = comparisonService.compareStrict(listOfTransactions1, listOfTransactions2);
 
-        assertEquals(comparedList.get(0).getTransactionId(), filteredList.get(0).getTransactionId());
+        assertEquals(comparedList.get(0).getTransactionId(), "ID3");
     }
 
+    // TODO CHANGE TO SET
+    /*
     @Test
     void compareFuzzy() {
-        Transaction transaction = new Transaction("ID2");
-        when(fuzzySimpleRatioComparator.compareTransactionsFuzzy(transaction, listOfTransactions2, 80)).thenReturn(filteredList);
-        List<Transaction> comparedList = comparisonService.compareStrict(listOfTransactions1, listOfTransactions2);
+        List<Transaction> comparedList = comparisonService.compareFuzzy(transaction, listOfTransactions2, "Simple Ratio", 80);
 
-        assertEquals(comparedList.get(0).getTransactionId(), filteredList.get(0).getTransactionId());
+        assertEquals(comparedList.get(0).getWalletReference(), comparedList.get(0).getWalletReference());
     }
+    */
 
 }

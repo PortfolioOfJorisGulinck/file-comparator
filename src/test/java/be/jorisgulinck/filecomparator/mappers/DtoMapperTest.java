@@ -26,20 +26,12 @@ class DtoMapperTest {
                 new Transaction("ID1"), new Transaction("ID2")));
         comparedResult = new ArrayList<>(Arrays.asList(new Transaction("ID1"),
                 new Transaction("ID3")));
-
-    }
-
-    @Test
-    void createComparisonResult() {
-        ComparisonResultDto comparisonResultDto = mapper.createComparisonResult(originalList, comparedResult);
-        assertEquals(comparisonResultDto.getNumberOfDuplicates(), 1);
-        assertEquals(comparisonResultDto.getTotalRecords(), 3);
     }
 
     @Test
     void createListOfUniqueTransactionDtos() {
-
-        // TODO implement logic
+       List<TransactionDto> dtoList = mapper.createListOfTransactionDtos(originalList);
+        assertEquals(3, dtoList.size());
 
     }
 
