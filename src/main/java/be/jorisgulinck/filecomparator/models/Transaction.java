@@ -13,6 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Transaction {
 
+    private String id;
     private String transactionId;
     private String profileName;
     private String transactionDate;

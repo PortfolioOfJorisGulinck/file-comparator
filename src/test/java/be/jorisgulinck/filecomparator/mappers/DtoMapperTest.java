@@ -44,7 +44,7 @@ class DtoMapperTest {
 
     @Test
     void transactionDtoToTransaction() {
-        TransactionDto transactionDto = new TransactionDto("transactionId", "profileName",
+        TransactionDto transactionDto = new TransactionDto("JKHKJHFSFZ","transactionId", "profileName",
                 "transactionDate", "transactionAmount", "transactionNarrative",
                 "transactionDescription", "transactionType", "walletReference",
                 "fileName", null);

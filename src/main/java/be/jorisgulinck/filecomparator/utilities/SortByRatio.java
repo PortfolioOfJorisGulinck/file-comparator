@@ -1,6 +1,5 @@
 package be.jorisgulinck.filecomparator.utilities;
 
-import be.jorisgulinck.filecomparator.dto.TransactionDto;
 import be.jorisgulinck.filecomparator.models.Transaction;
 
 import java.util.Comparator;

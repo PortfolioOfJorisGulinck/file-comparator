@@ -2,6 +2,7 @@ package be.jorisgulinck.filecomparator.mappers;
 
 import be.jorisgulinck.filecomparator.services.ValidationService;
 import be.jorisgulinck.filecomparator.utilities.ParseUtilities;
+import be.jorisgulinck.filecomparator.validation.CsvValidationResult;
 import be.jorisgulinck.filecomparator.validation.ValidationResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +48,7 @@ class CsvMapperTest {
 
     @Test
     void mapAndValidateTest() {
-        ValidationResult validationResult = Mockito.mock(ValidationResult.class);
+        CsvValidationResult validationResult = Mockito.mock(CsvValidationResult.class);
         when(csvMapper.mapAndValidate(inputStream, "file1")).thenReturn(validationResult);
         ValidationResult result = csvMapper.mapAndValidate(inputStream, "file1");
     }

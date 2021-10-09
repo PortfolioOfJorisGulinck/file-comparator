@@ -1,8 +1,6 @@
 package be.jorisgulinck.filecomparator.validation;
 
 import be.jorisgulinck.filecomparator.models.Transaction;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +16,17 @@ public class CsvValidationResult implements ValidationResult {
         this.validatedListOfTransactions = new ArrayList<>();
     }
 
-    @Override
-    public void addErrorMessage(String message) {
-        this.errorMessages.add(message);
-    }
-
-    @Override
     public void addTransaction(Transaction transaction) {
         validatedListOfTransactions.add(transaction);
     }
 
-    @Override
     public List<Transaction> getValidatedListOfTransactions() {
         return validatedListOfTransactions;
+    }
+
+    @Override
+    public void addErrorMessage(String message) {
+        this.errorMessages.add(message);
     }
 
     @Override

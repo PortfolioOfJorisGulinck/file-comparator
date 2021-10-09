@@ -15,7 +15,7 @@ class SortByRatioTest {
         SortByRatio sortByRatio = new SortByRatio();
         Transaction transaction = mock(Transaction.class);
         when(transaction.getRatio()).thenReturn("42");
-        assertEquals(0, sortByRatio.compare(transaction, new Transaction("42", "foo.txt", "2020-03-01", "10",
+        assertEquals(0, sortByRatio.compare(transaction, new Transaction("HJKHKJHF", "42", "foo.txt", "2020-03-01", "10",
                 "Transaction Narrative", "Transaction Description", "Transaction Type", "Wallet Reference", "foo.txt", "42")));
         verify(transaction).getRatio();
     }

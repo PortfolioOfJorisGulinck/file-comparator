@@ -1,6 +1,5 @@
 package be.jorisgulinck.filecomparator.mappers;
 
-import be.jorisgulinck.filecomparator.dto.ComparisonResultDto;
 import be.jorisgulinck.filecomparator.dto.TransactionDto;
 import be.jorisgulinck.filecomparator.models.Transaction;
 import org.modelmapper.ModelMapper;

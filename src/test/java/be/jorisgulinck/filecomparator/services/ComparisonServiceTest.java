@@ -21,6 +21,7 @@ class ComparisonServiceTest {
     void setUp() {
         comparisonService = new ComparisonService();
         transaction = new Transaction(
+                "HJKHKFDF",
                 "ID2",
                 "profileName2",
                 "transactionDate2",
@@ -32,7 +33,9 @@ class ComparisonServiceTest {
                 "fileName",
                 "0");
         listOfTransactions1 = new ArrayList<>(Arrays.asList(
-                new Transaction("ID2",
+                new Transaction(
+                        "HfKHKFDF",
+                        "ID2",
                         "profileName2",
                         "transactionDate2",
                         "transactionAmount2",
@@ -42,7 +45,9 @@ class ComparisonServiceTest {
                         "walletReference2",
                         "fileName",
                         "0"),
-                new Transaction("ID3",
+                new Transaction(
+                        "HfKHTFDF",
+                        "ID3",
                         "profileName3",
                         "transactionDate3",
                         "transactionAmount3",
@@ -53,7 +58,9 @@ class ComparisonServiceTest {
                         "fileName",
                         "0")));
         listOfTransactions2 = new ArrayList<>(Arrays.asList(
-                new Transaction("ID2",
+                new Transaction(
+                        "HfKHTBDF",
+                        "ID2",
                         "profileName2",
                         "transactionDate2",
                         "transactionAmount2",
@@ -63,7 +70,9 @@ class ComparisonServiceTest {
                         "walletReference2",
                         "fileName",
                         "0"),
-                new Transaction("ID 3",
+                new Transaction(
+                        "HfKHTFMF",
+                        "ID 3",
                         "profileName3",
                         "transactionDate3",
                         "transaction Amount3",

@@ -4,9 +4,7 @@ import be.jorisgulinck.filecomparator.models.Transaction;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Compares a collection of Transaction with a given Transaction for similarity using the FuzzyWuzzy Python algorithm.

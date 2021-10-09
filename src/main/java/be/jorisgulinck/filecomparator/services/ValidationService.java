@@ -1,9 +1,6 @@
 package be.jorisgulinck.filecomparator.services;
 
-import be.jorisgulinck.filecomparator.validation.CsvValidationResult;
-import be.jorisgulinck.filecomparator.validation.CsvValidator;
-import be.jorisgulinck.filecomparator.validation.FuzzyParamsValidator;
-import be.jorisgulinck.filecomparator.validation.ValidationResult;
+import be.jorisgulinck.filecomparator.validation.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +13,19 @@ public class ValidationService {
     private final FuzzyParamsValidator fuzzyParamsValidator;
     private final CsvValidator csvValidator;
 
-    public ValidationResult validateFuzzyParams(String matchingRoutine, String ratio) {
+    public FuzzyParamsValidationResult validateFuzzyParams(String matchingRoutine, String ratio) {
         return fuzzyParamsValidator.validateFuzzyParams(matchingRoutine, ratio);
     }
 
-    public ValidationResult validateCsvHeaders(ValidationResult validationResult, List<String> headers) {
+    public CsvValidationResult validateCsvHeaders(CsvValidationResult validationResult, List<String> headers) {
         return csvValidator.validateCsvHeaders(headers, validationResult);
     }
 
-    public ValidationResult validateTransactionDate(ValidationResult validationResult, String date) {
+    public CsvValidationResult validateTransactionDate(CsvValidationResult validationResult, String date) {
         return csvValidator.validateTransactionDate(date, validationResult);
     }
 
-    public ValidationResult validateTransactionId(ValidationResult validationResult, String id) {
+    public CsvValidationResult validateTransactionId(CsvValidationResult validationResult, String id) {
         return csvValidator.validateTransactionId(id, validationResult);
     }
 }

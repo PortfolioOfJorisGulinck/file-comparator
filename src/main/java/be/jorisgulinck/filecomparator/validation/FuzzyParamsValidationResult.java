@@ -1,9 +1,5 @@
 package be.jorisgulinck.filecomparator.validation;
 
-import be.jorisgulinck.filecomparator.models.Transaction;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +14,6 @@ public class FuzzyParamsValidationResult implements ValidationResult {
     @Override
     public void addErrorMessage(String message) {
         errorMessages.add(message);
-    }
-
-    @Override
-    public void addTransaction(Transaction transaction) {
-    }
-
-    @Override
-    public List<Transaction> getValidatedListOfTransactions() {
-        return null;
     }
 
     @Override

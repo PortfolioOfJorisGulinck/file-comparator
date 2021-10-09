@@ -12,11 +12,9 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class CsvValidator {
 
-    // TODO can i refactor this class?
-
     private final ParseUtilities parseUtilities;
 
-    public ValidationResult validateCsvHeaders(List<String> headers, ValidationResult validationResult) {
+    public CsvValidationResult validateCsvHeaders(List<String> headers, CsvValidationResult validationResult) {
 
         for (String header : headers) {
             Pattern pattern = Pattern.compile("(ProfileName|TransactionDate|TransactionAmount|TransactionNarrative|" +
@@ -31,7 +29,7 @@ public class CsvValidator {
         return validationResult;
     }
 
-    public ValidationResult validateTransactionDate(String date, ValidationResult validationResult) {
+    public CsvValidationResult validateTransactionDate(String date, CsvValidationResult validationResult) {
         if (!parseUtilities.tryParseDate(date)){
             validationResult.setValidationError(true);
             validationResult.addErrorMessage("There was a problem reading the transaction date.");
@@ -39,7 +37,7 @@ public class CsvValidator {
         return validationResult;
     }
 
-    public ValidationResult validateTransactionId(String id, ValidationResult validationResult) {
+    public CsvValidationResult validateTransactionId(String id, CsvValidationResult validationResult) {
         Pattern pattern = Pattern.compile("\\d{16}");
         Matcher matcher = pattern.matcher(id);
         if (!matcher.find()){

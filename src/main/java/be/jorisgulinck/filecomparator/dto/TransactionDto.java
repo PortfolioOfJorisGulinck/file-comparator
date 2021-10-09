@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TransactionDto {
 
+    private String id;
     private String transactionId;
     private String profileName;
     private String transactionDate;
@@ -22,4 +23,8 @@ public class TransactionDto {
     private String fileName;
     private String ratio;
 
+    public TransactionDto(String id, String fileName) {
+        this.id = id;
+        this.fileName = fileName;
+    }
 }

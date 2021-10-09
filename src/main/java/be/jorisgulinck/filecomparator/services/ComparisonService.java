@@ -5,12 +5,11 @@ import be.jorisgulinck.filecomparator.comparison.fuzzy.FuzzyComparatorFactory;
 import be.jorisgulinck.filecomparator.comparison.strict.StrictComparator;
 import be.jorisgulinck.filecomparator.comparison.strict.StrictEqualsComparator;
 import be.jorisgulinck.filecomparator.dto.ComparisonResultDto;
+import be.jorisgulinck.filecomparator.dto.FuzzyComparisonResultDto;
 import be.jorisgulinck.filecomparator.dto.TransactionDto;
 import be.jorisgulinck.filecomparator.mappers.DtoMapper;
 import be.jorisgulinck.filecomparator.models.Transaction;
 import be.jorisgulinck.filecomparator.utilities.SortByRatio;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -41,7 +40,38 @@ public class ComparisonService {
         return comparisonResultDto;
     }
 
-    /** Compares two collections of Transaction for similarity using the TransactionComparator class */
+    public FuzzyComparisonResultDto createFuzzyComparisonResult(String id, String file, List<TransactionDto> listOfFile1,
+                                                                List<TransactionDto> listOfFile2, String matchingRoutine, String ratio) {
+        TransactionDto comparisonTransaction;
+        List<Transaction> fuzzyMatchedDtoList;
+        if (file.equals("file1")) {
+            comparisonTransaction = listOfFile1
+                    .stream()
+                    .filter(transactionDto -> id.equals(transactionDto.getId()))
+                    .findAny()
+                    .orElse(null);
+
+            fuzzyMatchedDtoList = compareFuzzy(
+                    comparisonTransaction, listOfFile2, matchingRoutine, Integer.parseInt(ratio));
+        } else if(file.equals("file2")){
+            comparisonTransaction = listOfFile2
+                    .stream()
+                    .filter(transactionDto -> id.equals(transactionDto.getId()))
+                    .findAny()
+                    .orElse(null);
+            fuzzyMatchedDtoList = compareFuzzy(
+                    comparisonTransaction, listOfFile1, matchingRoutine, Integer.parseInt(ratio));
+        } else {
+            comparisonTransaction = new TransactionDto();
+            fuzzyMatchedDtoList = new ArrayList<>();
+        }
+
+        return new FuzzyComparisonResultDto(comparisonTransaction, dtoMapper.createListOfTransactionDtos(fuzzyMatchedDtoList));
+    }
+
+    /**
+     * Compares two collections of Transaction for similarity using the TransactionComparator class
+     */
     public List<Transaction> compareStrict(List<Transaction> listOfTransactions1, List<Transaction> listOfTransactions2) {
         StrictComparator strictComparator = new StrictEqualsComparator();
         return strictComparator.compareTransactionsStrict(listOfTransactions1, listOfTransactions2);
@@ -51,7 +81,7 @@ public class ComparisonService {
      * Compares a collection of Transaction with a Transaction for similarity in a fuzzy way using
      * the TransactionComparator class
      */
-    public List<TransactionDto> compareFuzzy(TransactionDto transactionDto, List<TransactionDto> listOfTransactionDtos, String matchingRoutine, int ratio) {
+    public List<Transaction> compareFuzzy(TransactionDto transactionDto, List<TransactionDto> listOfTransactionDtos, String matchingRoutine, int ratio) {
         FuzzyComparatorFactory fuzzyComparatorFactory = new FuzzyComparatorFactory();
         FuzzyComparator fuzzyComparator = fuzzyComparatorFactory.createFuzzyComparator(matchingRoutine);
 
@@ -59,14 +89,13 @@ public class ComparisonService {
                 dtoMapper.transactionDtoToTransaction(transactionDto),
                 dtoMapper.createListOfTransactions(listOfTransactionDtos), ratio);
 
+        List<Transaction> uniqueFuzzyComparedList = dtoMapper.createListOfUniqueTransactions(fuzzyComparedList);
+
         Comparator c = Collections.reverseOrder(new SortByRatio());
-        Collections.sort(fuzzyComparedList, c);
+        Collections.sort(uniqueFuzzyComparedList, c);
 
-        return dtoMapper.createListOfTransactionDtos(fuzzyComparedList);
+        return uniqueFuzzyComparedList;
     }
-
-
-
 
 
 }
