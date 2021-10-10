@@ -70,7 +70,7 @@ the Simple Ratio at a ratio of 80.
 For all searching strategies, all properties are calculated equal. You can call this a more pessimistic approach, but
 this way you do not miss any data that has different values.
 
-##Developers guide
+## Developers guide
 
 You can find the Java Documentation in the directory ./javadoc
 
