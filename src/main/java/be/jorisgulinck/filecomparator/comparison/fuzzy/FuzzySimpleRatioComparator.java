@@ -13,7 +13,7 @@ import java.util.List;
  * uses the Levenshtein distance algorithm.
  */
 @Component
-public class FuzzySimpleRatioComparator implements FuzzyComparator {
+public class FuzzySimpleRatioComparator {
 
     protected FuzzySimpleRatioComparator() {
     }

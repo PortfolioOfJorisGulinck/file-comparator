@@ -75,6 +75,7 @@ this way you do not miss any data that has different values.
 ### Recourses
 * You can find the Java Documentation in the directory ./javadoc. Open there the index.html file in you browser.
 * You can find the csv files and some corrupted csv files (for demonstration purposes) in the directory ./files
+* Diagrams can be found in the directory ./uml
 
 ### Running on local machine
 1. If not already installed, download the java jdk on you machine. You can find the download link [here](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html).
