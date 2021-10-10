@@ -72,7 +72,16 @@ this way you do not miss any data that has different values.
 
 ## Developers guide
 
-You can find the Java Documentation in the directory ./javadoc
+### Recourses
+* You can find the Java Documentation in the directory ./javadoc. Open there the index.html file in you browser.
+* You can find the csv files and some corrupted csv files (for demonstration purposes) in the directory ./files
 
-You can find the csv files and some corrupted files in the directory ./files
+### Running on local machine
+1. If not already installed, download the java jdk on you machine. You can find the download link [here](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html).
+2. Open the folder 'file-comparator' with a java compatible IDE. For example IntelliJ or Eclipse.
+3. Right-click on the 'pom.xml' file and choose maven/reload project.
+4. Open the java file src/main/java/be.jorisgulinck.filecomparator/FileComparatorApplication.
+5. Right-click on 'FileComparatorApplication' and choose run.
+6. Open your browser and go to 'http://localhost:8080/'.
+
 
