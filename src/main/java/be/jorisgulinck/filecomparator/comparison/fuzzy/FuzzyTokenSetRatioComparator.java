@@ -40,14 +40,45 @@ public class FuzzyTokenSetRatioComparator implements FuzzyComparator {
         List<Transaction> filteredList = new ArrayList<>();
 
         for (Transaction transactionToCompare : transactionsToCompare) {
-            int idRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionId(), transactionToCompare.getTransactionId());
-            int nameRatio = FuzzySearch.tokenSetRatio(transaction.getProfileName(), transactionToCompare.getProfileName());
-            int dateRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionDate(), transactionToCompare.getTransactionDate());
-            int amountRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionAmount(), transactionToCompare.getTransactionAmount());
-            int narrativeRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionNarrative(), transactionToCompare.getTransactionNarrative());
-            int descriptionRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionDescription(), transactionToCompare.getTransactionDescription());
-            int typeRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionType(), transactionToCompare.getTransactionType());
-            int referenceRatio = FuzzySearch.tokenSetRatio(transaction.getWalletReference(), transactionToCompare.getWalletReference());
+            int idRatio = 100;
+            if (transactionToCompare.getTransactionId() != null){
+                idRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionId(), transactionToCompare.getTransactionId());
+            }
+
+            int nameRatio = 100;
+            if (transactionToCompare.getProfileName() != null){
+                nameRatio = FuzzySearch.tokenSetRatio(transaction.getProfileName(), transactionToCompare.getProfileName());
+            }
+
+            int dateRatio = 100;
+            if (transactionToCompare.getTransactionDate() != null) {
+                dateRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionDate(), transactionToCompare.getTransactionDate());
+            }
+
+            int amountRatio = 100;
+            if (transactionToCompare.getTransactionAmount() != null) {
+                amountRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionAmount(), transactionToCompare.getTransactionAmount());
+            }
+
+            int narrativeRatio = 100;
+            if (transactionToCompare.getTransactionNarrative() != null) {
+                narrativeRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionNarrative(), transactionToCompare.getTransactionNarrative());
+            }
+
+            int descriptionRatio = 100;
+            if (transactionToCompare.getTransactionDescription() != null) {
+                descriptionRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionDescription(), transactionToCompare.getTransactionDescription());
+            }
+
+            int typeRatio = 100;
+            if (transactionToCompare.getTransactionType() != null) {
+                typeRatio = FuzzySearch.tokenSetRatio(transaction.getTransactionType(), transactionToCompare.getTransactionType());
+            }
+
+            int referenceRatio = 100;
+            if (transactionToCompare.getWalletReference() != null) {
+                referenceRatio = FuzzySearch.tokenSetRatio(transaction.getWalletReference(), transactionToCompare.getWalletReference());
+            }
 
             int totalRatio = (idRatio + nameRatio + dateRatio + amountRatio + narrativeRatio + descriptionRatio +
                     typeRatio + referenceRatio) / 8;

@@ -35,14 +35,45 @@ public class FuzzyPartialRatioComparator implements FuzzyComparator {
         List<Transaction> filteredList = new ArrayList<>();
 
         for (Transaction transactionToCompare : transactionsToCompare) {
-            int idRatio = FuzzySearch.partialRatio(transaction.getTransactionId(), transactionToCompare.getTransactionId());
-            int nameRatio = FuzzySearch.partialRatio(transaction.getProfileName(), transactionToCompare.getProfileName());
-            int dateRatio = FuzzySearch.partialRatio(transaction.getTransactionDate(), transactionToCompare.getTransactionDate());
-            int amountRatio = FuzzySearch.partialRatio(transaction.getTransactionAmount(), transactionToCompare.getTransactionAmount());
-            int narrativeRatio = FuzzySearch.partialRatio(transaction.getTransactionNarrative(), transactionToCompare.getTransactionNarrative());
-            int descriptionRatio = FuzzySearch.partialRatio(transaction.getTransactionDescription(), transactionToCompare.getTransactionDescription());
-            int typeRatio = FuzzySearch.partialRatio(transaction.getTransactionType(), transactionToCompare.getTransactionType());
-            int referenceRatio = FuzzySearch.partialRatio(transaction.getWalletReference(), transactionToCompare.getWalletReference());
+            int idRatio = 100;
+            if (transactionToCompare.getTransactionId() != null){
+                idRatio = FuzzySearch.partialRatio(transaction.getTransactionId(), transactionToCompare.getTransactionId());
+            }
+
+            int nameRatio = 100;
+            if (transactionToCompare.getProfileName() != null){
+                nameRatio = FuzzySearch.partialRatio(transaction.getProfileName(), transactionToCompare.getProfileName());
+            }
+
+            int dateRatio = 100;
+            if (transactionToCompare.getTransactionDate() != null) {
+                dateRatio = FuzzySearch.partialRatio(transaction.getTransactionDate(), transactionToCompare.getTransactionDate());
+            }
+
+            int amountRatio = 100;
+            if (transactionToCompare.getTransactionAmount() != null) {
+                amountRatio = FuzzySearch.partialRatio(transaction.getTransactionAmount(), transactionToCompare.getTransactionAmount());
+            }
+
+            int narrativeRatio = 100;
+            if (transactionToCompare.getTransactionNarrative() != null) {
+                narrativeRatio = FuzzySearch.partialRatio(transaction.getTransactionNarrative(), transactionToCompare.getTransactionNarrative());
+            }
+
+            int descriptionRatio = 100;
+            if (transactionToCompare.getTransactionDescription() != null) {
+                descriptionRatio = FuzzySearch.partialRatio(transaction.getTransactionDescription(), transactionToCompare.getTransactionDescription());
+            }
+
+            int typeRatio = 100;
+            if (transactionToCompare.getTransactionType() != null) {
+                typeRatio = FuzzySearch.partialRatio(transaction.getTransactionType(), transactionToCompare.getTransactionType());
+            }
+
+            int referenceRatio = 100;
+            if (transactionToCompare.getWalletReference() != null) {
+                referenceRatio = FuzzySearch.partialRatio(transaction.getWalletReference(), transactionToCompare.getWalletReference());
+            }
 
             int totalRatio = (idRatio + nameRatio + dateRatio + amountRatio + narrativeRatio + descriptionRatio +
                     typeRatio + referenceRatio) / 8;

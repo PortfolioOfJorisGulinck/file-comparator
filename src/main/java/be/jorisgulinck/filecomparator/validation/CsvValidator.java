@@ -28,8 +28,8 @@ public class CsvValidator {
     public CsvValidationResult validateCsvHeaders(List<String> headers, CsvValidationResult validationResult) {
 
         for (String header : headers) {
-            Pattern pattern = Pattern.compile("(ProfileName|TransactionDate|TransactionAmount|TransactionNarrative|" +
-                    "TransactionDescription|TransactionID|TransactionType|WalletReference)", Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile("(^ProfileName$|^TransactionDate$|^TransactionAmount$|^TransactionNarrative$|" +
+                    "^TransactionDescription$|^TransactionID$|^TransactionType$|^WalletReference$)", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(header);
 
             if (!matcher.find()) {
