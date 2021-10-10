@@ -74,3 +74,5 @@ this way you do not miss any data that has different values.
 
 You can find the Java Documentation in the directory ./javadoc
 
+You can find the csv files and some corrupted files in the directory ./files
+
