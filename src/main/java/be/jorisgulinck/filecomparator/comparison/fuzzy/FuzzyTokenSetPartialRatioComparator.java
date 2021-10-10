@@ -41,42 +41,42 @@ public class FuzzyTokenSetPartialRatioComparator implements FuzzyComparator {
 
         for (Transaction transactionToCompare : transactionsToCompare) {
             int idRatio = 100;
-            if (transactionToCompare.getTransactionId() != null){
+            if (transactionToCompare.getTransactionId() != null && transaction.getTransactionId() != null){
                 idRatio = FuzzySearch.tokenSetPartialRatio(transaction.getTransactionId(), transactionToCompare.getTransactionId());
             }
 
             int nameRatio = 100;
-            if (transactionToCompare.getProfileName() != null){
+            if (transactionToCompare.getProfileName() != null && transaction.getProfileName() != null){
                 nameRatio= FuzzySearch.tokenSetPartialRatio(transaction.getProfileName(), transactionToCompare.getProfileName());
             }
 
             int dateRatio = 100;
-            if (transactionToCompare.getTransactionDate() != null) {
+            if (transactionToCompare.getTransactionDate() != null && transaction.getTransactionDate() != null) {
                 dateRatio = FuzzySearch.tokenSetPartialRatio(transaction.getTransactionDate(), transactionToCompare.getTransactionDate());
             }
 
             int amountRatio = 100;
-            if (transactionToCompare.getTransactionAmount() != null) {
+            if (transactionToCompare.getTransactionAmount() != null && transaction.getTransactionAmount() != null) {
                 amountRatio = FuzzySearch.tokenSetPartialRatio(transaction.getTransactionAmount(), transactionToCompare.getTransactionAmount());
             }
 
             int narrativeRatio = 100;
-            if (transactionToCompare.getTransactionNarrative() != null) {
+            if (transactionToCompare.getTransactionNarrative() != null && transaction.getTransactionNarrative() != null) {
                 narrativeRatio = FuzzySearch.tokenSetPartialRatio(transaction.getTransactionNarrative(), transactionToCompare.getTransactionNarrative());
             }
 
             int descriptionRatio = 100;
-            if (transactionToCompare.getTransactionDescription() != null) {
+            if (transactionToCompare.getTransactionDescription() != null && transaction.getTransactionDescription() != null) {
                 descriptionRatio = FuzzySearch.tokenSetPartialRatio(transaction.getTransactionDescription(), transactionToCompare.getTransactionDescription());
             }
 
             int typeRatio = 100;
-            if (transactionToCompare.getTransactionType() != null) {
+            if (transactionToCompare.getTransactionType() != null && transaction.getTransactionType() != null) {
                 typeRatio = FuzzySearch.tokenSetPartialRatio(transaction.getTransactionType(), transactionToCompare.getTransactionType());
             }
 
             int referenceRatio = 100;
-            if (transactionToCompare.getWalletReference() != null) {
+            if (transactionToCompare.getWalletReference() != null && transaction.getWalletReference() != null) {
                 referenceRatio = FuzzySearch.tokenSetPartialRatio(transaction.getWalletReference(), transactionToCompare.getWalletReference());
             }
 
