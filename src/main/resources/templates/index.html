@@ -9,6 +9,11 @@
 <section class="my-5">
     <div class="container">
         <div class="row">
+            <div class="col-md-8 mx-auto d-flex justify-content-end">
+                <a class="btn btn-outline-danger" target="_blank" th:href="@{/help}" role="button">User guide</a>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-8 mx-auto">
                 <h2 class="mb-3">Specify files to compare</h2>
                 <form method="post" th:action="@{/upload}" enctype="multipart/form-data">

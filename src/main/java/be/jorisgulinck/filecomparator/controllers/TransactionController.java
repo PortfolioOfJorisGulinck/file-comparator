@@ -150,4 +150,14 @@ public class TransactionController {
         }
         return modelAndView;
     }
+
+    /**
+     * Maps the incoming request for creating the help page.
+     *
+     * @return ModelAndView object.
+     */
+    @GetMapping("/help")
+    public ModelAndView helpPage() {
+        return new ModelAndView("help");
+    }
 }
