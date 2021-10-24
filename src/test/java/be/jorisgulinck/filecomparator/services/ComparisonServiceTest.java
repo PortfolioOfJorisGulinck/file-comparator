@@ -1,104 +1,47 @@
 package be.jorisgulinck.filecomparator.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import be.jorisgulinck.filecomparator.dto.ComparisonResultDto;
+import be.jorisgulinck.filecomparator.dto.TransactionDto;
 import be.jorisgulinck.filecomparator.models.Transaction;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@ContextConfiguration(classes = {ComparisonService.class})
+@ExtendWith(SpringExtension.class)
 class ComparisonServiceTest {
-
+    @Autowired
     private ComparisonService comparisonService;
-    private List<Transaction> listOfTransactions1;
-    private List<Transaction> listOfTransactions2;
-    private Transaction transaction;
 
-    @BeforeEach
-    void setUp() {
-        comparisonService = new ComparisonService();
-        transaction = new Transaction(
-                "HJKHKFDF",
-                "ID2",
-                "profileName2",
-                "transactionDate2",
-                "transactionAmount2",
-                "transactionNarrative2",
-                "transactionDescription2",
-                "transactionType2",
-                "walletReference2",
-                "fileName",
-                "0");
-        listOfTransactions1 = new ArrayList<>(Arrays.asList(
-                new Transaction(
-                        "HfKHKFDF",
-                        "ID2",
-                        "profileName2",
-                        "transactionDate2",
-                        "transactionAmount2",
-                        "transactionNarrative2",
-                        "transactionDescription2",
-                        "transactionType2",
-                        "walletReference2",
-                        "fileName",
-                        "0"),
-                new Transaction(
-                        "HfKHTFDF",
-                        "ID3",
-                        "profileName3",
-                        "transactionDate3",
-                        "transactionAmount3",
-                        "transactionNarrative3",
-                        "transactionDescription3",
-                        "transactionType3",
-                        "walletReference3",
-                        "fileName",
-                        "0")));
-        listOfTransactions2 = new ArrayList<>(Arrays.asList(
-                new Transaction(
-                        "HfKHTBDF",
-                        "ID2",
-                        "profileName2",
-                        "transactionDate2",
-                        "transactionAmount2",
-                        "transactionNarrative2",
-                        "transactionDescription2",
-                        "transactionType2",
-                        "walletReference2",
-                        "fileName",
-                        "0"),
-                new Transaction(
-                        "HfKHTFMF",
-                        "ID 3",
-                        "profileName3",
-                        "transactionDate3",
-                        "transaction Amount3",
-                        "transactionNarrative3",
-                        "transaction Description3",
-                        "transactionType3",
-                        "walletReference3",
-                        "fileName",
-                        "0")));
+    @Test
+    void testCreateComparisonResult() {
+        List<Transaction> originalList = new ArrayList<>();
+        List<Transaction> otherList = new ArrayList<>();
+        ComparisonResultDto comparisonResult = this.comparisonService.createComparisonResult(originalList, otherList);
+
+        assertEquals(0, comparisonResult.getUnmatchedRecords());
+        assertEquals(0, comparisonResult.getTotalRecords());
+        assertEquals(0, comparisonResult.getNumberOfDuplicates());
+        assertEquals(0, comparisonResult.getMatchingRecords());
     }
 
     @Test
-    void compareStrict() {
-        List<Transaction> comparedList = comparisonService.compareStrict(listOfTransactions1, listOfTransactions2);
-
-        assertEquals(comparedList.get(0).getTransactionId(), "ID3");
+    void testCreateFuzzyComparisonResult() {
+        List<TransactionDto> listOfFile1 = new ArrayList<>();
+        List<TransactionDto> listOfFile2 = new ArrayList<>();
+        assertEquals(0,
+                this.comparisonService
+                        .createFuzzyComparisonResult("42", "File", listOfFile1, listOfFile2, "Matching Routine", "80")
+                        .getFuzzyComparedList().size());
     }
-
-    // TODO CHANGE TO SET
-    /*
-    @Test
-    void compareFuzzy() {
-        List<Transaction> comparedList = comparisonService.compareFuzzy(transaction, listOfTransactions2, "Simple Ratio", 80);
-
-        assertEquals(comparedList.get(0).getWalletReference(), comparedList.get(0).getWalletReference());
-    }
-    */
 
 }
+

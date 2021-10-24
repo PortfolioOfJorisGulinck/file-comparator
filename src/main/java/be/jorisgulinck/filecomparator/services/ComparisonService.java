@@ -100,7 +100,7 @@ public class ComparisonService {
      * @param otherListOfTransactions Other collection of {@link Transaction}.
      * @return Collection of {@link Transaction} that didn't match.
      */
-    public List<Transaction> compareStrict(List<Transaction> listOfTransactions, List<Transaction> otherListOfTransactions) {
+    private List<Transaction> compareStrict(List<Transaction> listOfTransactions, List<Transaction> otherListOfTransactions) {
         StrictComparator strictComparator = new StrictEqualsComparator();
         return strictComparator.compareTransactionsStrict(listOfTransactions, otherListOfTransactions);
     }
@@ -115,7 +115,7 @@ public class ComparisonService {
      * @param ratio                 The value that determines the precision of the search algorithm.
      * @return Collection of {@link Transaction} that match the search criteria.
      */
-    public List<Transaction> compareFuzzy(TransactionDto transactionDto, List<TransactionDto> listOfTransactionDtos, String matchingRoutine, int ratio) {
+    private List<Transaction> compareFuzzy(TransactionDto transactionDto, List<TransactionDto> listOfTransactionDtos, String matchingRoutine, int ratio) {
         FuzzyComparatorFactory fuzzyComparatorFactory = new FuzzyComparatorFactory();
         FuzzyComparator fuzzyComparator = fuzzyComparatorFactory.createFuzzyComparator(matchingRoutine);
 

@@ -9,15 +9,16 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FuzzyComparatorsTest {
-/*
+
     FuzzyComparatorFactory fuzzyComparatorFactory;
     Transaction transaction;
-    Set<Transaction> listOfTransactions;
+    List<Transaction> listOfTransactions;
 
     @BeforeEach
     void setup() {
         fuzzyComparatorFactory = new FuzzyComparatorFactory();
         transaction = new Transaction(
+                "HKBGUB",
                 "ID2",
                 "profileName",
                 "transactionDate",
@@ -28,8 +29,10 @@ class FuzzyComparatorsTest {
                 "walletReference",
                 "fileName",
                 "0");
-        listOfTransactions = new HashSet<>(Arrays.asList(
-                new Transaction("ID2",
+        listOfTransactions = new ArrayList<>(Arrays.asList(
+                new Transaction(
+                        "HKBGUB",
+                        "ID2",
                         "profile Name",
                         "transactionDate",
                         "transaction Amount",
@@ -39,7 +42,9 @@ class FuzzyComparatorsTest {
                         "walletReference",
                         "fileName",
                         "0"),
-                new Transaction("ID 3 totally different data string",
+                new Transaction(
+                        "ZZMMXX",
+                        "ID 3 totally different data string",
                         "profile Name totally different data string",
                         "transactionDate totally different data string",
                         "transactionAmount totally different data string",
@@ -105,5 +110,4 @@ class FuzzyComparatorsTest {
         assertEquals(comparedList.get(0).getTransactionId(), transaction.getTransactionId());
     }
 
- */
 }

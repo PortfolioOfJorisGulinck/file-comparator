@@ -30,7 +30,7 @@ class DtoMapperTest {
 
     @Test
     void createListOfUniqueTransactionDtos() {
-       List<TransactionDto> dtoList = mapper.createListOfTransactionDtos(originalList);
+        List<TransactionDto> dtoList = mapper.createListOfTransactionDtos(originalList);
         assertEquals(3, dtoList.size());
 
     }
@@ -44,7 +44,7 @@ class DtoMapperTest {
 
     @Test
     void transactionDtoToTransaction() {
-        TransactionDto transactionDto = new TransactionDto("JKHKJHFSFZ","transactionId", "profileName",
+        TransactionDto transactionDto = new TransactionDto("JKHKJHFSFZ", "transactionId", "profileName",
                 "transactionDate", "transactionAmount", "transactionNarrative",
                 "transactionDescription", "transactionType", "walletReference",
                 "fileName", null);
